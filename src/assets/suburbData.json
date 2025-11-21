@@ -1,0 +1,147 @@
+[
+  {
+    "suburb": "Sydney",
+    "state": "NSW",
+    "postcode": "2000"
+  },
+  {
+    "suburb": "Melbourne",
+    "state": "VIC",
+    "postcode": "3000"
+  },
+  {
+    "suburb": "Brisbane",
+    "state": "QLD",
+    "postcode": "4000"
+  },
+  {
+    "suburb": "Perth",
+    "state": "WA",
+    "postcode": "6000"
+  },
+  {
+    "suburb": "Adelaide",
+    "state": "SA",
+    "postcode": "5000"
+  },
+  {
+    "suburb": "Hobart",
+    "state": "TAS",
+    "postcode": "7000"
+  },
+  {
+    "suburb": "Darwin",
+    "state": "NT",
+    "postcode": "0800"
+  },
+  {
+    "suburb": "Canberra",
+    "state": "ACT",
+    "postcode": "2600"
+  },
+  {
+    "suburb": "Parramatta",
+    "state": "NSW",
+    "postcode": "2150"
+  },
+  {
+    "suburb": "Newcastle",
+    "state": "NSW",
+    "postcode": "2300"
+  },
+  {
+    "suburb": "Wollongong",
+    "state": "NSW",
+    "postcode": "2500"
+  },
+  {
+    "suburb": "Central Coast",
+    "state": "NSW",
+    "postcode": "2250"
+  },
+  {
+    "suburb": "Southbank",
+    "state": "VIC",
+    "postcode": "3006"
+  },
+  {
+    "suburb": "Carlton",
+    "state": "VIC",
+    "postcode": "3053"
+  },
+  {
+    "suburb": "Footscray",
+    "state": "VIC",
+    "postcode": "3011"
+  },
+  {
+    "suburb": "Geelong",
+    "state": "VIC",
+    "postcode": "3220"
+  },
+  {
+    "suburb": "South Bank",
+    "state": "QLD",
+    "postcode": "4101"
+  },
+  {
+    "suburb": "Gold Coast",
+    "state": "QLD",
+    "postcode": "4217"
+  },
+  {
+    "suburb": "Sunshine Coast",
+    "state": "QLD",
+    "postcode": "4558"
+  },
+  {
+    "suburb": "Townsville",
+    "state": "QLD",
+    "postcode": "4810"
+  },
+  {
+    "suburb": "Northbridge",
+    "state": "WA",
+    "postcode": "6003"
+  },
+  {
+    "suburb": "Fremantle",
+    "state": "WA",
+    "postcode": "6160"
+  },
+  {
+    "suburb": "East Perth",
+    "state": "WA",
+    "postcode": "6004"
+  },
+  {
+    "suburb": "North Adelaide",
+    "state": "SA",
+    "postcode": "5006"
+  },
+  {
+    "suburb": "Glenelg",
+    "state": "SA",
+    "postcode": "5045"
+  },
+  {
+    "suburb": "Hindmarsh",
+    "state": "SA",
+    "postcode": "5007"
+  },
+  {
+    "suburb": "West Hobart",
+    "state": "TAS",
+    "postcode": "7002"
+  },
+  {
+    "suburb": "Launceston",
+    "state": "TAS",
+    "postcode": "7250"
+  },
+  {
+    "suburb": "Palmerston",
+    "state": "NT",
+    "postcode": "0831"
+  }
+]

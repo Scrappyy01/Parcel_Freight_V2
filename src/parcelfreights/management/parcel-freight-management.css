@@ -1,0 +1,12 @@
+td:has(.checkbox-cell) {
+  background-color: blue;
+  padding: 0;
+}
+
+.checkbox-cell {
+  padding: 12px 20px;
+}
+
+body {
+  overflow-x: hidden !important;
+}

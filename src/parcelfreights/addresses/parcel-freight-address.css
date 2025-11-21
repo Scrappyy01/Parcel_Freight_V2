@@ -1,0 +1,9 @@
+.react-datepicker-wrapper {
+  margin-right: 5px;
+}
+
+.react-datepicker-column {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}

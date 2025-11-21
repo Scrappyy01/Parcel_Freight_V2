@@ -1,0 +1,13 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Logo Icon - Stylized Link/Chain -->
+  <g id="icon">
+    <rect x="8" y="18" width="20" height="24" rx="4" fill="#0066CC" />
+    <rect x="32" y="18" width="20" height="24" rx="4" fill="#0099FF" />
+    <path d="M28 30C28 26.6863 25.3137 24 22 24H18V36H22C25.3137 36 28 33.3137 28 30Z" fill="#004C99" />
+  </g>
+  
+  <!-- LoadLink Text -->
+  <g id="text" fill="#132B43">
+    <text x="62" y="35" font-family="Arial, sans-serif" font-size="24" font-weight="700">LoadLink</text>
+  </g>
+</svg>
