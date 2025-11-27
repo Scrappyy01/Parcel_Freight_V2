@@ -75,7 +75,8 @@ function PF_SingleListing_Confirm_Info({
   const [showTermsModal, setShowTermsModal] = useState(false);
   const [showNoteModal, setShowNoteModal] = useState(false);
 
-  const { freight_id } = useParams();
+  const params = useParams();
+  const freight_id = params?.id; // Get 'id' from route params since the route is [id]
 
   useEffect(() => {
     setQuoteDetail({
@@ -216,7 +217,7 @@ function PF_SingleListing_Confirm_Info({
         <form
           onSubmit={handleSubmit}
           id="page-four-confirm"
-          className="XXcontainer bg-[rgb(247,243,235)] rounded-xl max-w-[1300px] mx-auto p-4"
+          className="XXcontainer bg-[rgb(247,243,235)] rounded-xl w-full p-4"
         >
           <div className="grid grid-cols-1">
             <div className="lg:col-span-12 md:col-span-12 sm:col-span-12">

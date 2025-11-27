@@ -69,10 +69,23 @@ function PF_Trade_List() {
   ];
 
   // Function to handle row click
-  const handleRowClick = (row) => {
-    setJobNo(row.values.job_no); // Extract the job number from the row data
+  const handleRowClick = async (row) => {
+    const freightId = row.values.job_no;
+    setJobNo(freightId);
     setSelectedRow(row);
-    router.push(`/parcel-freight/${row.values.job_no}/`); // Navigate to the route
+    
+    try {
+      // Make API call to get quote details
+      const response = await axiosInstance.get(`/freight/${freightId}/get_quote_details`);
+      console.log('Quote details:', response.data);
+      
+      // Navigate to the parcel freight detail page with the freight ID
+      router.push(`/parcel-freight/${freightId}`);
+    } catch (error) {
+      console.error('Error fetching quote details:', error);
+      // Still navigate even if API call fails
+      router.push(`/parcel-freight/${freightId}`);
+    }
   };
 
   const getRows = (data) => {
@@ -106,10 +119,10 @@ function PF_Trade_List() {
 
   return (
     <Fragment>
-      <div className="pt-8 pb-12 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <div className="lg:col-span-12 xl:col-span-10 xl:col-start-2">
+      <div className="py-8">
+        <div className="w-full">
+          <div className="grid grid-cols-1 gap-6">
+            <div className="w-full">
               <Card>
                 <Card.Header>
                   <div className="p-6 border-b border-gray-200">
@@ -151,6 +164,10 @@ function PF_Trade_List() {
                       table={dataTableData}
                       initialState={dataTableData.initialState}
                       canSearch
+                      showTotalEntries
+                      isSorted
+                      entriesPerPage={{ defaultValue: 10, entries: [5, 10, 15, 20, 25] }}
+                      pagination={{ variant: "gradient", color: "info" }}
                       onRowClick={handleRowClick}
                     />
                   </div>

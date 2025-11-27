@@ -73,7 +73,8 @@ function PF_Address_Details({ onSubmitParcelFreightAddress, onBack }) {
 
   const [hasError, setHasError] = useState(false);
 
-  const { freight_id } = useParams();
+  const params = useParams();
+  const freight_id = params?.id; // Get 'id' from route params since the route is [id]
 
   const holidaysSet = useMemo(() => {
     if (formData?.pickup_state) {

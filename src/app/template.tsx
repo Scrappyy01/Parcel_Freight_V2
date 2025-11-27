@@ -27,8 +27,8 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <>
       <PF_Navigation onLogout={handlePF_Logout} onLogin={handlePF_Login} />
-      <TitleBanner title={pf_title} isDesktop={true} />
-      <main className="container mx-auto px-4 py-8">
+      
+      <main className="container mx-auto px-4 py-8 bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100 min-h-screen pt-[95px]">
         {children}
       </main>
     </>

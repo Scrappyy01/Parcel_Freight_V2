@@ -110,7 +110,8 @@ const Parcel_Freight_Detail = ({ onSubmitParcelFreightDetail }) => {
   ]);
 
   const router = useRouter();
-  const { freight_id } = useParams();
+  const params = useParams();
+  const freight_id = params?.id; // Get 'id' from route params since the route is [id]
 
   // Handle form submission and prevent default behavior
   const handleParcelFreightDetailSubmit = async (event) => {
@@ -214,7 +215,7 @@ const Parcel_Freight_Detail = ({ onSubmitParcelFreightDetail }) => {
       <form
         onSubmit={handleParcelFreightDetailSubmit}
         id="page-two"
-        className="bg-[rgb(247,243,235)] rounded-xl mt-0 max-w-[1300px] mx-auto p-8"
+        className="bg-[rgb(247,243,235)] rounded-xl mt-0 w-full p-8"
       >
         <div className="snf5-pfs-order-details">
           {pf_user?.role !== "Admin" ? (

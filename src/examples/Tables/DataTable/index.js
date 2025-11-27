@@ -186,7 +186,7 @@ function DataTable({
                 size="small"
                 fullWidth
                 onChange={({ currentTarget }) => {
-                  setSearch(search);
+                  setSearch(currentTarget.value);
                   onSearchChange(currentTarget.value);
                 }}
               />
@@ -289,7 +289,7 @@ function DataTable({
                     max: customizedPageOptions.length,
                   }}
                   value={customizedPageOptions[pageIndex]}
-                  onChange={(handleInputPagination, handleInputPaginationValue)}
+                  onChange={(event) => handleInputPagination(event)}
                 />
               </MDBox>
             ) : (

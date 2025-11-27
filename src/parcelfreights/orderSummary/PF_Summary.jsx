@@ -102,16 +102,16 @@ const PF_Summary = ({ onBack, onStatus }) => {
 
   return (
     <Fragment>
-      <main className="min-h-screen bg-gradient-to-br from-[#f0f2f5] to-[#f0f2f5] py-12 px-4">
-        <div className="max-w-6xl mx-auto">
+      <div className="min-h-screen py-8">
+        <div className="w-full px-4 md:px-6 lg:px-8 space-y-8">
           {/* Header */}
-          <div className="text-center mb-8">
+          <div className="text-center">
             <h1 className="text-5xl font-bold text-black mb-2">Your Parcel is Booked!</h1>
             <p className="text-xl text-[#FF7D44] font-semibold">Shipment Information</p>
           </div>
 
           {/* Shipment ID Banner */}
-          <div className="rounded-xl shadow-xl p-8 mb-8" style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}>
+          <div className="rounded-xl shadow-xl p-8" style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}>
             <div className="text-center">
               <p className="text-white text-sm font-semibold mb-1">Shipment Details</p>
               <h2 className="text-5xl font-bold text-white tracking-wider">
@@ -121,7 +121,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* Main Content Grid - PICKUP and DROPOFF */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-6">
             {/* PICKUP Section */}
             {pickupAddress && (
               <div className="bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow">
@@ -211,7 +211,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* BOOKING INFORMATION Section */}
-          <div className="bg-white rounded-xl shadow-xl p-6 mb-6 hover:shadow-2xl transition-shadow">
+          <div className="bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow">
             <div className="flex items-center gap-3 mb-4 pb-3" style={{ borderBottom: '2px solid #FF7D44' }}>
               <svg className="w-8 h-8 text-[#FF7D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -241,7 +241,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* SHIPPING COSTS Section */}
-          <div className="bg-white rounded-xl shadow-xl p-6 mb-6 hover:shadow-2xl transition-shadow">
+          <div className="bg-white rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow">
             <div className="flex items-center gap-3 mb-4 pb-3" style={{ borderBottom: '2px solid #FF7D44' }}>
               <svg className="w-8 h-8 text-[#FF7D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -296,7 +296,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* SHIPMENT INFORMATION Section */}
-          <div className="bg-gray-100 rounded-xl shadow-xl p-6 mb-8 hover:shadow-2xl transition-shadow">
+          <div className="bg-gray-100 rounded-xl shadow-xl p-6 hover:shadow-2xl transition-shadow">
             <div className="flex items-center gap-3 mb-4 pb-3" style={{ borderBottom: '2px solid #FF7D44' }}>
               <svg className="w-8 h-8 text-[#FF7D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
@@ -344,7 +344,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* Action Buttons */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
+          <div className="grid md:grid-cols-2 gap-6 pb-8">
             <button 
               onClick={handleDownloadLabel}
               className="group relative py-6 px-8 text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 overflow-hidden border-0"
@@ -370,7 +370,7 @@ const PF_Summary = ({ onBack, onStatus }) => {
             </button>
           </div>
         </div>
-      </main>
+      </div>
     </Fragment>
   );
 };

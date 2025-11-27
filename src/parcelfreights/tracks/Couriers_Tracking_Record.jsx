@@ -84,7 +84,7 @@ const Couriers_Tracking_Record = ({ freight_id, order_code }) => {
 
   return (
     <div className="my-12">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="w-full">
         <div className="flex gap-4 mb-6">
           <Button
             onClick={handleRefresh}

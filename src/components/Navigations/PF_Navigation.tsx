@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import dynamic from "next/dynamic";
 import { UserContext } from "@/contexts/UserContext";
-import loadlink from "@/assets/ll-logo.svg";
+import loadlink from "@/assets/Loadlink-Logo.svg";
 import PFList from "./PF_List";
 import { ApplicationMode } from "@/contexts/ApplicationMode";
 
@@ -22,6 +22,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
   const router = useRouter();
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const [showModal, setShowModal] = useState({
     pfbutton: false,
@@ -195,14 +196,26 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
             />
           </a>
 
-          <div className="flex items-center justify-between flex-grow">
+          {/* Hamburger menu button - visible on mobile */}
+          <button
+            className="lg:hidden flex flex-col gap-1 p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className={`block w-6 h-0.5 bg-gray-800 transition-transform ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+            <span className={`block w-6 h-0.5 bg-gray-800 transition-opacity ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+            <span className={`block w-6 h-0.5 bg-gray-800 transition-transform ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+          </button>
+
+          {/* Desktop menu - hidden on mobile */}
+          <div className="hidden lg:flex items-center justify-between flex-grow">
             <div className="mx-3 flex gap-4 items-center">
               <Link
                 className="ll-navlink text-decoration-none fw-semibold"
                 href="/parcel-freight"
                 onClick={() => setApplicationMode("Parcel Freight")}
               >
-                New Booking
+                New Booking 
               </Link>
 
               <a
@@ -262,6 +275,92 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 </Link>
               </div>
             )}
+          </div>
+        </div>
+
+        {/* Mobile menu - slides down when open */}
+        <div className={`lg:hidden absolute top-[75px] left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+          <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
+            <Link
+              className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded"
+              href="/parcel-freight"
+              onClick={() => {
+                setApplicationMode("Parcel Freight");
+                setIsMobileMenuOpen(false);
+              }}
+            >
+              New Booking
+            </Link>
+
+            <a
+              className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded"
+              href="https://app.loadlink.com.au/listings/"
+            >
+              General Freight
+            </a>
+
+            {pf_user != null && (
+              <div className="border-t pt-3">
+                <PFList />
+              </div>
+            )}
+            
+            {dashboard && (
+              <div className="border-t pt-3">
+                {dashboard}
+              </div>
+            )}
+
+            {pf_user != null && pf_user?.user_roles?.admin && (
+              <Link
+                className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded border-t pt-3"
+                href="/admin/all-parcel-freights/"
+                onClick={() => {
+                  setApplicationMode("Parcel Freight");
+                  setIsMobileMenuOpen(false);
+                }}
+              >
+                Admin
+              </Link>
+            )}
+
+            <div className="border-t pt-3 flex flex-col gap-2">
+              {!pf_user || !pf_user?.isAuthenticated ? (
+                <Link
+                  className="btn btn-primary wgl-button w-full text-center"
+                  href="/"
+                  onClick={(e) => {
+                    handleOpenModal(e);
+                    setIsMobileMenuOpen(false);
+                  }}
+                >
+                  Login
+                </Link>
+              ) : (
+                <Fragment>
+                  <Link
+                    href="/trade-application"
+                    className="btn btn-outline-primary w-full text-center"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Trade Account Application
+                  </Link>
+                  <Link
+                    className="btn btn-primary wgl-button w-full text-center"
+                    href="/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setApplicationMode("Parcel Freight");
+                      logout();
+                      setIsMobileMenuOpen(false);
+                      router.push("/");
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </Fragment>
+              )}
+            </div>
           </div>
         </div>
       </nav>

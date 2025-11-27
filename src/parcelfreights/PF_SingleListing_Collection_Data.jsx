@@ -39,7 +39,8 @@ const PF_SingleListing_Collection_Data = () => {
   const [ecommerceUser, setEcommerceUser] = useState(false);
 
   const router = useRouter();
-  const { freight_id } = useParams();
+  const params = useParams();
+  const freight_id = params?.id; // Get 'id' from route params since the route is [id]
   const ignoreAutoProgressRef = useRef(false);
 
   useEffect(() => {
@@ -195,17 +196,6 @@ const PF_SingleListing_Collection_Data = () => {
                 marginRight: "auto",
               }}
             >
-              <img
-                src={loadlink}
-                className="d-inline-block align-top"
-                alt="loadlink"
-                style={{
-                  marginTop: "-15px",
-                  marginBottom: "20px",
-                  minWidth: "300px",
-                  width: "40%",
-                }}
-              />
               
               {/* Custom Tabs Navigation */}
               <div className="border-b border-gray-200 mb-3">
