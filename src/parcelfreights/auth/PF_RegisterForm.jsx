@@ -71,37 +71,48 @@ const PF_RegisterForm = ({ registerShow, handleClose }) => {
     }
   };
 
-  return (
-    <Fragment>
-      {registerShow.pfform && (
-        <Modal
-          isOpen={registerShow.pfform}
-          onClose={handleClose}
-          title="Create a new account"
-        >
-          <div style={{ padding: "25px" }}>
-            <form
-              onSubmit={handleSubmit}
-              id="page-three-address"
-              className="XXcontainer form-background"
-              noValidate
-            >
-              <label className="pfs-input-label">
-                Name *{" "}
-                {hasError && !name && (
-                  <span className="text-xs text-red-600 font-light ml-2">
-                    name cannot be empty
-                  </span>
-                )}
-              </label>
-              <input
-                className="pfs-input"
-                name="loginName"
-                onChange={onChange}
-              />
+ return (
+  <Fragment>
+    {registerShow.pfform && (
+      <Modal isOpen={registerShow.pfform} onClose={handleClose} title="Create a new account">
+        <div className="w-full max-w-md mx-auto px-6 py-8">
+          <form
+            onSubmit={handleSubmit}
+            id="page-three-address"
+            className="space-y-6"
+            noValidate
+          >
+            {/* Name */}
+<div className="space-y-6">
+  {/* Logo acima do formulário */}
+  <img
+    src="/images/loadlink-logo.png"
+    alt="Loadlink Logo"
+    className="mt-0 mb-6 mx-auto max-w-[400px]"
+  />
 
-              <label className="pfs-input-label">
-                Email *{" "}
+  {/* Campo Name */}
+  <div>
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      Name *
+      {hasError && !name && (
+        <span className="text-xs text-red-600 font-light ml-2">
+          name cannot be empty
+        </span>
+      )}
+    </label>
+    <input
+      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+      name="loginName"
+      onChange={onChange}
+    />
+  </div>
+</div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Email *
                 {hasError && !validateEmail(email) && (
                   <span className="text-xs text-red-600 font-light ml-2">
                     invalid email
@@ -109,13 +120,16 @@ const PF_RegisterForm = ({ registerShow, handleClose }) => {
                 )}
               </label>
               <input
-                className="pfs-input"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 name="loginEmail"
                 onChange={onChange}
               />
+            </div>
 
-              <label className="pfs-input-label">
-                Password *{" "}
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Password *
                 {hasError && !password && (
                   <span className="text-xs text-red-600 font-light ml-2">
                     password cannot be empty
@@ -123,25 +137,32 @@ const PF_RegisterForm = ({ registerShow, handleClose }) => {
                 )}
               </label>
               <input
-                className="pfs-input"
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 name="password"
                 type="password"
                 onChange={onChange}
               />
-              <button
-                type="submit"
-                form="page-three-address"
-                className="snf5_oauth_button btn btn-primary btn-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled={hasError && (!name || !email || !password)}
-              >
-                Sign Up
-              </button>
-            </form>
-          </div>
-        </Modal>
-      )}
-    </Fragment>
-  );
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              form="page-three-address"
+              className={`w-full text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md ${
+                hasError && (!name || !email || !password)
+                  ? 'bg-[#A0A0A0] shadow-none cursor-not-allowed'
+                  : 'bg-[#193D5A] hover:bg-[#162f45] hover:shadow-lg'
+              }`}
+              disabled={hasError && (!name || !email || !password)}
+            >
+              Sign Up
+            </button>
+          </form>
+        </div>
+      </Modal>
+    )}
+  </Fragment>
+);
 };
 
 export default PF_RegisterForm;

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { Fragment, useContext, useEffect, useState } from "react";
 import Link from "next/link";
@@ -10,47 +10,56 @@ import PFList from "./PF_List";
 import { ApplicationMode } from "@/contexts/ApplicationMode";
 
 // Dynamically import the modal to avoid SSR issues with localStorage/window
-const PFPopupComponent = dynamic(() => import("@/parcelfreights/auth/PF_Popup_Component"), {
-  ssr: false,
-});
+const PFPopupComponent = dynamic(
+  () => import("@/parcelfreights/auth/PF_Popup_Component"),
+  {
+    ssr: false,
+  }
+);
 
 /**
  * Navigation menu for desktop views.
  * @returns {JSX} React component.
  */
-const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: () => void }) => {
+const PF_Navigation = ({
+  onLogin,
+  onLogout,
+}: {
+  onLogin: () => void;
+  onLogout: () => void;
+}) => {
   const router = useRouter();
   const pathname = usePathname();
   const [isMounted, setIsMounted] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
+
   const [showModal, setShowModal] = useState({
     pfbutton: false,
     pfform: false,
   });
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
-  
+
   // Ensure component only renders on client after mounting
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  
+
   const handleOpenModal = (e: React.MouseEvent) => {
     e.preventDefault();
     setApplicationMode("Parcel Freight");
     setShowModal({ pfbutton: true, pfform: false });
   };
-  
+
   const handleCloseModal = () => {
     setShowModal({ pfbutton: false, pfform: false });
     router.push("/parcel-freight/"); // Navigate to the default Parcel Freight route
   };
-  
+
   const handleUpload = (data: any) => {
     // Handle upload logic here
-    console.log('Upload data:', data);
+    console.log("Upload data:", data);
   };
-  
+
   const { applicationMode, setApplicationMode } = useContext(ApplicationMode);
   const { pf_user, setPf_User } = useContext(UserContext);
 
@@ -61,17 +70,21 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
   // Bool to determine if current page is a single listing page (/listings/:id/)
   const isSingleListingPage = /\/listings\/[0-9]{4}\/?/.test(pathname);
   const isSingleTruckPage = /\/trucks\/[0-9]{4}\/?/.test(pathname);
-  
+
   // Href for the nav login button
   let loginBtnHref = `/login/`;
   let dashboard = null;
-  
+
   if (isSingleListingPage) {
-    loginBtnHref = `/login/?redirect=${pathname.split("/")[1]}-${pathname.split("/")[2]}/`;
+    loginBtnHref = `/login/?redirect=${pathname.split("/")[1]}-${
+      pathname.split("/")[2]
+    }/`;
   } else if (isSingleTruckPage) {
-    loginBtnHref = `/login/?redirect=${pathname.split("/")[1]}-${pathname.split("/")[2]}/`;
+    loginBtnHref = `/login/?redirect=${pathname.split("/")[1]}-${
+      pathname.split("/")[2]
+    }/`;
   }
-  
+
   if (pf_user != null && pf_user?.user_roles?.admin) {
     dashboard = (
       <div className="relative group">
@@ -165,8 +178,8 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
           <a href="https://www.loadlink.com.au/">
             <img
               src={loadlink.src}
-              width="200"
-              height="50"
+              width="400" // largura maior
+              height="100" // altura proporcional
               className="inline-block align-top"
               alt="loadlink"
               style={{ marginTop: "-5px" }}
@@ -188,8 +201,8 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
           <a href="https://www.loadlink.com.au/">
             <img
               src={loadlink.src}
-              width="200"
-              height="50"
+              width="300"
+              height="45"
               className="inline-block align-top"
               alt="loadlink"
               style={{ marginTop: "-5px" }}
@@ -202,9 +215,21 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            <span className={`block w-6 h-0.5 bg-gray-800 transition-transform ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
-            <span className={`block w-6 h-0.5 bg-gray-800 transition-opacity ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
-            <span className={`block w-6 h-0.5 bg-gray-800 transition-transform ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+            <span
+              className={`block w-6 h-0.5 bg-gray-800 transition-transform ${
+                isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-gray-800 transition-opacity ${
+                isMobileMenuOpen ? "opacity-0" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-6 h-0.5 bg-gray-800 transition-transform ${
+                isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+              }`}
+            ></span>
           </button>
 
           {/* Desktop menu - hidden on mobile */}
@@ -215,7 +240,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 href="/parcel-freight"
                 onClick={() => setApplicationMode("Parcel Freight")}
               >
-                New Booking 
+                New Booking
               </Link>
 
               <a
@@ -226,7 +251,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
               </a>
 
               {pf_user != null && <PFList />}
-              
+
               {dashboard}
             </div>
 
@@ -262,7 +287,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                   Trade Account Application
                 </Link>
                 <Link
-                  className="btn btn-primary wgl-button"
+                  className="btn btn-primary"
                   href="/"
                   onClick={(e) => {
                     e.preventDefault();
@@ -279,7 +304,13 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
         </div>
 
         {/* Mobile menu - slides down when open */}
-        <div className={`lg:hidden absolute top-[75px] left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
+        <div
+          className={`lg:hidden absolute top-[75px] left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out ${
+            isMobileMenuOpen
+              ? "max-h-screen opacity-100"
+              : "max-h-0 opacity-0 overflow-hidden"
+          }`}
+        >
           <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
             <Link
               className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded"
@@ -304,12 +335,8 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 <PFList />
               </div>
             )}
-            
-            {dashboard && (
-              <div className="border-t pt-3">
-                {dashboard}
-              </div>
-            )}
+
+            {dashboard && <div className="border-t pt-3">{dashboard}</div>}
 
             {pf_user != null && pf_user?.user_roles?.admin && (
               <Link
@@ -364,9 +391,13 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
           </div>
         </div>
       </nav>
-      <PFPopupComponent show={showModal} handleClose={handleCloseModal} handleUpload={handleUpload} />
+      <PFPopupComponent
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleUpload={handleUpload}
+      />
     </Fragment>
   );
 };
-  
+
 export default PF_Navigation;
