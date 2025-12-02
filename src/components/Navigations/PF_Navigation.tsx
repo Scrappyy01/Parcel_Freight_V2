@@ -257,7 +257,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
               <div className="flex gap-3 items-center">
                 <Link
                   href="/trade-application"
-                  className="px-4 py-2.5 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg"
+                  className="px-4 py-4 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg"
                   style={{ 
                     borderColor: '#FF7D44',
                     color: '#FF7D44',
@@ -278,16 +278,19 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 {/* User Dropdown */}
                 <div className="relative">
                   <button
-                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white hover:shadow-lg transition-all duration-200 cursor-pointer"
+                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer border border-gray-200"
                     onClick={() => setShowUserDropdown(!showUserDropdown)}
                     onBlur={() => setTimeout(() => setShowUserDropdown(false), 200)}
                   >
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-sm font-semibold">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-sm font-bold shadow-sm">
                       {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
                     </div>
-                    <span className="font-medium">{pf_user?.name || 'User'}</span>
+                    <div className="flex flex-col items-start">
+                      <span className="font-semibold text-gray-900 text-sm leading-tight">{pf_user?.name || 'User'}</span>
+                      <span className="text-xs text-gray-500">View profile</span>
+                    </div>
                     <svg 
-                      className={`w-4 h-4 transition-transform duration-200 ${showUserDropdown ? 'rotate-180' : ''}`} 
+                      className={`w-4 h-4 text-gray-400 transition-transform duration-200 ml-1 ${showUserDropdown ? 'rotate-180' : ''}`} 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -297,25 +300,40 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                   </button>
                   
                   {showUserDropdown && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50">
-                      <div className="px-4 py-3 bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white">
-                        <p className="text-sm font-medium">{pf_user?.name || 'User'}</p>
-                        <p className="text-xs opacity-90">{pf_user?.email || ''}</p>
+                    <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 animate-fadeIn">
+                      <div className="p-4 border-b border-gray-100">
+                        <div className="flex items-center gap-3">
+                          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-lg font-bold shadow-md">
+                            {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-gray-900 truncate">{pf_user?.name || 'User'}</p>
+                            <p className="text-xs text-gray-500 truncate">{pf_user?.email || ''}</p>
+                          </div>
+                        </div>
                       </div>
-                      <div className="py-1">
+                      <div className="py-2">
                         <Link
                           href="/user-profile"
-                          className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
+                          className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-orange-50 hover:text-[#FF7D44] transition-all cursor-pointer group"
                           onClick={() => setShowUserDropdown(false)}
                         >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-orange-100 transition-colors">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">My Profile</p>
+                            <p className="text-xs text-gray-500">Account settings</p>
+                          </div>
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-[#FF7D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                           </svg>
-                          <span className="font-medium">User Profile</span>
                         </Link>
-                        <hr className="my-1" />
+                        <hr className="my-2 border-gray-100" />
                         <button
-                          className="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors w-full text-left cursor-pointer"
+                          className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-red-50 hover:text-red-600 transition-all w-full text-left cursor-pointer group"
                           onClick={(e) => {
                             e.preventDefault();
                             setApplicationMode("Parcel Freight");
@@ -324,10 +342,15 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                             router.push("/");
                           }}
                         >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                          </svg>
-                          <span className="font-medium">Logout</span>
+                          <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-gray-100 group-hover:bg-red-100 transition-colors">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                            </svg>
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-medium text-sm">Sign Out</p>
+                            <p className="text-xs text-gray-500">Logout from account</p>
+                          </div>
                         </button>
                       </div>
                     </div>
