@@ -4,8 +4,6 @@ import { useState, useEffect, Fragment, useContext } from "react";
 import { UserContext } from "./../../contexts/UserContext";
 import { useRouter } from "next/navigation";
 
-import { Button, Card } from "@/components/ui/ui";
-
 import DataTable from "@/examples/Tables/DataTable";
 
 import axiosInstance from "@/utils/axiosInstance";
@@ -14,14 +12,13 @@ import { formatDate } from "@/utils/helpers";
 function PF_Trade_List() {
   const { pf_user } = useContext(UserContext);
 
-  // let queryOptions = null;
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("all");
 
   const router = useRouter();
 
   const [selectedRow, setSelectedRow] = useState(null);
-
   const [jobNo, setJobNo] = useState(null);
 
   useEffect(() => {
@@ -47,23 +44,26 @@ function PF_Trade_List() {
   const handleGetUnpaidJobs = (event) => {
     const data = allData.filter((row) => row.status === 1);
     setTableData(getRows(data));
+    setActiveFilter("unpaid");
   };
 
   const handleGetPaidJobs = (event) => {
     const data = allData.filter((row) => row.status === 3 || row.status === 8);
     setTableData(getRows(data));
+    setActiveFilter("paid");
   };
 
   const handleGetAllJobs = (event) => {
     setTableData(getRows(allData));
+    setActiveFilter("all");
   };
 
   const pf_Columns = [
     { Header: "Freight ID", accessor: "job_no", width: "10%" },
     { Header: "Name", accessor: "user_name" },
-    { Header: "date", accessor: "date", width: "20%" },
-    { Header: "pickup", accessor: "pickup" },
-    { Header: "delivery", accessor: "delivery" },
+    { Header: "Date", accessor: "date", width: "20%" },
+    { Header: "Pickup", accessor: "pickup" },
+    { Header: "Delivery", accessor: "delivery" },
     { Header: "Order No.", accessor: "order_code" },
     { Header: "Cons No.", accessor: "consignment_number" },
   ];
@@ -107,72 +107,80 @@ function PF_Trade_List() {
   const dataTableData = {
     columns: pf_Columns,
     rows: tableData,
-    initialState: {
-      // sortBy: [
-      //   {
-      //     id: "id", // The column ID to sort by
-      //     desc: false, // Sort in descending order
-      //   },
-      // ],
-    },
+    initialState: {},
   };
 
   return (
     <Fragment>
-      <div className="py-8">
-        <div className="w-full">
-          <div className="grid grid-cols-1 gap-6">
-            <div className="w-full">
-              <Card>
-                <Card.Header>
-                  <div className="p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold text-[#132B43]">Trade Parcel Freights</h2>
-                  </div>
-                </Card.Header>
-                <Card.Body>
-                  <div className="p-6">
-                    {/* Filter Buttons */}
-                    <div className="flex flex-wrap gap-3 justify-end mb-6">
-                      <Button
-                        variant="contained"
-                        color="info"
-                        size="medium"
-                        onClick={handleGetUnpaidJobs}
-                      >
-                        Parcels Quoted Only
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="info"
-                        size="medium"
-                        onClick={handleGetPaidJobs}
-                      >
-                        Parcels Paid
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="info"
-                        size="medium"
-                        onClick={handleGetAllJobs}
-                      >
-                        All Parcels
-                      </Button>
-                    </div>
+      <div className="min-h-screen">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+          {/* Controls Card */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+              {/* Header Section */}
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-1">
+                  Trade Parcel Freights
+                </h1>
+                <p className="text-sm text-gray-600">Manage and track your trade shipments</p>
+              </div>
+              {/* Filter Buttons */}
+              <div className="flex flex-wrap gap-3 justify-end">
+              <button
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all cursor-pointer ${
+                  activeFilter === "unpaid"
+                    ? "text-white shadow-md"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+                style={activeFilter === "unpaid" ? { background: 'linear-gradient(195deg, #132B43, #1a3a52)' } : {}}
+                onClick={() => {
+                  handleGetUnpaidJobs();
+                }}
+              >
+                Parcels Quoted Only
+              </button>
+              <button
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all cursor-pointer ${
+                  activeFilter === "paid"
+                    ? "text-white shadow-md"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+                style={activeFilter === "paid" ? { background: 'linear-gradient(195deg, #132B43, #1a3a52)' } : {}}
+                onClick={() => {
+                  handleGetPaidJobs();
+                }}
+              >
+                Parcels Paid
+              </button>
+              <button
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all cursor-pointer ${
+                  activeFilter === "all"
+                    ? "text-white shadow-md"
+                    : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                }`}
+                style={activeFilter === "all" ? { background: 'linear-gradient(195deg, #132B43, #1a3a52)' } : {}}
+                onClick={() => {
+                  handleGetAllJobs();
+                }}
+              >
+                All Parcels
+              </button>
+              </div>
+            </div>
+          </div>
 
-                    {/* Data Table */}
-                    <DataTable
-                      table={dataTableData}
-                      initialState={dataTableData.initialState}
-                      canSearch
-                      showTotalEntries
-                      isSorted
-                      entriesPerPage={{ defaultValue: 10, entries: [5, 10, 15, 20, 25] }}
-                      pagination={{ variant: "gradient", color: "info" }}
-                      onRowClick={handleRowClick}
-                    />
-                  </div>
-                </Card.Body>
-              </Card>
+          {/* Table Card */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
+            <div className="overflow-x-auto">
+              <DataTable
+                table={dataTableData}
+                initialState={dataTableData.initialState}
+                canSearch
+                showTotalEntries
+                isSorted
+                entriesPerPage={{ defaultValue: 10, entries: [5, 10, 15, 20, 25] }}
+                onRowClick={handleRowClick}
+              />
             </div>
           </div>
         </div>

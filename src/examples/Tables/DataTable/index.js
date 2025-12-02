@@ -186,7 +186,7 @@ function DataTable({
                 size="small"
                 fullWidth
                 onChange={({ currentTarget }) => {
-                  setSearch(currentTarget.value);
+                  setSearch(search);
                   onSearchChange(currentTarget.value);
                 }}
               />
@@ -277,7 +277,7 @@ function DataTable({
           >
             {canPreviousPage && (
               <MDPagination item onClick={() => previousPage()}>
-                <Icon sx={{ fontWeight: "bold" }}>chevron_left</Icon>
+                <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>‹</span>
               </MDPagination>
             )}
             {renderPagination.length > 6 ? (
@@ -289,7 +289,7 @@ function DataTable({
                     max: customizedPageOptions.length,
                   }}
                   value={customizedPageOptions[pageIndex]}
-                  onChange={(event) => handleInputPagination(event)}
+                  onChange={(handleInputPagination, handleInputPaginationValue)}
                 />
               </MDBox>
             ) : (
@@ -297,7 +297,7 @@ function DataTable({
             )}
             {canNextPage && (
               <MDPagination item onClick={() => nextPage()}>
-                <Icon sx={{ fontWeight: "bold" }}>chevron_right</Icon>
+                <span style={{ fontSize: '1.25rem', lineHeight: 1 }}>›</span>
               </MDPagination>
             )}
           </MDPagination>

@@ -2,6 +2,7 @@
 
 import { use } from 'react';
 import dynamic from 'next/dynamic';
+import loadlinkLogo from '@/assets/Loadlink-Logo.svg';
 
 // Dynamically import to avoid SSR issues with localStorage
 const PFSingleListingData = dynamic(
@@ -9,11 +10,29 @@ const PFSingleListingData = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Loading booking details...</p>
+      <div className="flex flex-col items-center justify-center min-h-[400px]" style={{ marginTop: '75px' }}>
+        <img 
+          src={loadlinkLogo.src} 
+          alt="Loadlink" 
+          className="w-64 animate-pulse mb-6"
+        />
+        <p className="text-gray-600 text-lg mb-4">Loading booking details...</p>
+        <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
+          <div 
+            className="h-full rounded-full animate-shimmer"
+            style={{
+              background: 'linear-gradient(90deg, transparent, #FF7D44, transparent)',
+              backgroundSize: '200% 100%',
+              animation: 'shimmer 1.5s infinite'
+            }}
+          />
         </div>
+        <style jsx>{`
+          @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+          }
+        `}</style>
       </div>
     ),
   }

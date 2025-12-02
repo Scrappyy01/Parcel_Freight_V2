@@ -35,7 +35,7 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
     <MDBox
       component="th"
       width={width}
-      py={1.5}
+      py={2}
       px={3}
       sx={({ palette: { light }, borders: { borderWidth } }) => ({
         borderBottom: `${borderWidth[1]} solid ${light.main}`,
@@ -56,35 +56,46 @@ function DataTableHeadCell({ width, children, sorted, align, ...rest }) {
           textTransform: "uppercase",
           cursor: sorted && "pointer",
           userSelect: sorted && "none",
+          display: "flex",
+          alignItems: "center",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
         })}
       >
-        {children}
+        <MDBox sx={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", flex: 1 }}>
+          {children}
+        </MDBox>
         {sorted && (
           <MDBox
-            position="absolute"
-            top={0}
-            right={align !== "right" ? "16px" : 0}
-            left={align === "right" ? "-5px" : "unset"}
+            position="relative"
+            ml={0.5}
+            display="flex"
+            flexDirection="column"
             sx={({ typography: { size } }) => ({
               fontSize: size.lg,
             })}
           >
-            <MDBox
-              position="absolute"
-              top={-6}
-              color={sorted === "asce" ? "text" : "secondary"}
-              opacity={sorted === "asce" ? 1 : 0.5}
+            <span
+              style={{
+                fontSize: '1rem',
+                lineHeight: '0.5',
+                opacity: sorted === "asce" ? 1 : 0.3,
+                color: sorted === "asce" ? "inherit" : "#999"
+              }}
             >
-              <Icon>arrow_drop_up</Icon>
-            </MDBox>
-            <MDBox
-              position="absolute"
-              top={0}
-              color={sorted === "desc" ? "text" : "secondary"}
-              opacity={sorted === "desc" ? 1 : 0.5}
+              ▲
+            </span>
+            <span
+              style={{
+                fontSize: '1rem',
+                lineHeight: '0.5',
+                opacity: sorted === "desc" ? 1 : 0.3,
+                color: sorted === "desc" ? "inherit" : "#999"
+              }}
             >
-              <Icon>arrow_drop_down</Icon>
-            </MDBox>
+              ▼
+            </span>
           </MDBox>
         )}
       </MDBox>

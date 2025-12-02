@@ -16,6 +16,7 @@ import ParcelFreightAddress from "./addresses/PF_Address_Details";
 import ParcelFreightDetail from "./details/Parcel_Freight_detail.jsx";
 
 import loadlink from "@/assets/ll-logo.svg";
+import loadlinkLogo from "@/assets/Loadlink-Logo.svg";
 import PFSingleListingConfirmInfo from "./confirmInfo/PF_SingleListing_Confirm_Info.jsx";
 import Payment from "./payments/Payment.jsx";
 import PFSummary from "./orderSummary/PF_Summary";
@@ -161,10 +162,29 @@ const PF_SingleListing_Collection_Data = () => {
    */
   if (status === "loading") {
     return (
-      <div className="spinnerStyle">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto" role="status">
-          <span className="sr-only">Loading...</span>
+      <div className="flex flex-col items-center justify-center min-h-[400px]" style={{ marginTop: '75px' }}>
+        <img 
+          src={loadlinkLogo.src} 
+          alt="Loadlink" 
+          className="w-64 animate-pulse mb-6"
+        />
+        <p className="text-gray-600 text-lg mb-4">Loading booking details...</p>
+        <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
+          <div 
+            className="h-full rounded-full"
+            style={{
+              background: 'linear-gradient(90deg, transparent, #FF7D44, transparent)',
+              backgroundSize: '200% 100%',
+              animation: 'shimmer 1.5s infinite'
+            }}
+          />
         </div>
+        <style jsx>{`
+          @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+          }
+        `}</style>
       </div>
     );
   }

@@ -19,6 +19,7 @@ import {
   nextBusinessDate,
 } from "../../utils/helpers";
 import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import Modal from "@/components/ui/ui/Modal";
 
 function PF_Ecommerce_List() {
@@ -283,8 +284,8 @@ function PF_Ecommerce_List() {
           return (
             <Fragment>
               <button
-                className="text-white text-xs px-2 py-1 rounded mr-1 min-w-0 disabled:opacity-60"
-                style={{ background: 'linear-gradient(195deg, #49a3f1, #1A73E8)', fontSize: '0.7rem' }}
+                className="text-white text-xs px-2 py-1 rounded mr-1 min-w-0 disabled:opacity-60 cursor-pointer"
+                style={{ background: 'linear-gradient(195deg, #132B43, #1a3a52)', fontSize: '0.7rem' }}
                 disabled={downloadingId === freight.freight_id}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -301,8 +302,8 @@ function PF_Ecommerce_List() {
                 )}
               </button>
               <button
-                className="text-white text-xs px-2 py-1 rounded min-w-0"
-                style={{ background: 'linear-gradient(195deg, #49a3f1, #1A73E8)', fontSize: '0.7rem' }}
+                className="text-white text-xs px-2 py-1 rounded min-w-0 cursor-pointer"
+                style={{ background: 'linear-gradient(195deg, #132B43, #1a3a52)', fontSize: '0.7rem' }}
                 onClick={(e) => {
                   e.stopPropagation();
                   handleTracking(freight);
@@ -486,86 +487,117 @@ function PF_Ecommerce_List() {
 
   return (
     <Fragment>
-      <div
-        className="w-screen h-screen p-0 m-0 overflow-auto"
-        style={{ backgroundColor: "#f8f9fa" }}
-      >
-        <div className="p-6 leading-tight">
-          <h5 className="text-xl font-medium mb-4">
-            E-Commerce Parcel Freights
-          </h5>
-          <div className="flex justify-between items-center mt-4">
-            <div>
-              <button
-                className="px-4 py-2 rounded text-white font-medium mr-4"
-                style={{ background: 'linear-gradient(195deg, #49a3f1, #1A73E8)' }}
-                onClick={handleGenerateLabels}
-              >
-                {booking ? (
-                  <>
-                    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mr-2"></div>
-                    Booking...
-                  </>
-                ) : (
-                  "Book Freights"
-                )}
-              </button>
-            </div>
-            <div className="mt-4">
-              <label
-                htmlFor="selectAll"
-                className="mr-2 cursor-pointer"
-              >
-                Select All
-              </label>
-              <input
-                type="checkbox"
-                checked={isAllSelected}
-                onChange={handleSelectAll}
-                name="selectAll"
-                id="selectAll"
-              />
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-slate-100">
+        <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
+          {/* Header Section */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              E-Commerce Parcel Freights
+            </h1>
+            <p className="text-gray-600">Manage and track your e-commerce shipments</p>
+          </div>
 
-              <label className="mr-10 ml-5">
-                Collection Date &nbsp;
-              </label>
-              <DatePicker
-                showIcon
-                selected={startDate}
-                dateFormat={"dd/MM/yyyy"}
-                onChange={handleOnChange}
-                name="pickup_date"
-                className="form-control"
-                minDate={minDateDP}
-                maxDate={maxDateDP}
-                filterDate={filterDate}
-              />
+          {/* Controls Card */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              {/* Left: Action Buttons */}
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  className="px-6 py-2.5 rounded-lg text-white font-medium shadow-sm hover:shadow-md transition-all disabled:opacity-60 cursor-pointer hover:cursor-pointer"
+                  style={{ background: 'linear-gradient(195deg, #132B43, #1a3a52)' }}
+                  onClick={handleGenerateLabels}
+                  disabled={selectedRows.length === 0 || booking}
+                >
+                  {booking ? (
+                    <>
+                      <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mr-2"></div>
+                      Booking...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="inline-block w-4 h-4 mr-2 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Book Freight ({selectedRows.length})
+                    </>
+                  )}
+                </button>
+
+                {showCheckbox && (
+                  <label className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors">
+                    <input
+                      type="checkbox"
+                      checked={isAllSelected}
+                      onChange={handleSelectAll}
+                      className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                    />
+                    <span className="text-sm font-medium text-gray-700 cursor-pointer">Select All</span>
+                  </label>
+                )}
+              </div>
+
+              {/* Center: Date Picker */}
+              <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 border border-gray-200">
+                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                  Collection Date
+                </label>
+                <div className="date-picker-wrapper">
+                  <DatePicker
+                    selected={startDate}
+                    dateFormat={"dd/MM/yyyy"}
+                    onChange={handleOnChange}
+                    name="pickup_date"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#FF7D44] focus:border-transparent"
+                    minDate={minDateDP}
+                    maxDate={maxDateDP}
+                    filterDate={filterDate}
+                    wrapperClassName="w-full"
+                    calendarClassName="border border-gray-200 rounded-lg shadow-lg"
+                  />
+                </div>
+              </div>
+
+              {/* Right: Filter Buttons */}
+              <div className="flex gap-2">
+                <button
+                  className={`px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+                    activeFilter === "notSent"
+                      ? "text-white shadow-md"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                  style={activeFilter === "notSent" ? { background: 'linear-gradient(195deg, #132B43, #1a3a52)' } : {}}
+                  onClick={() => {
+                    handleGetNotSent();
+                    setActiveFilter("notSent");
+                  }}
+                >
+                  Ready to Send
+                </button>
+                <button
+                  className={`px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
+                    activeFilter === "sent"
+                      ? "text-white shadow-md"
+                      : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"
+                  }`}
+                  style={activeFilter === "sent" ? { background: 'linear-gradient(195deg, #132B43, #1a3a52)' } : {}}
+                  onClick={() => {
+                    handleGetSent();
+                    setActiveFilter("sent");
+                  }}
+                >
+                  Sent
+                </button>
+              </div>
             </div>
-            <div className="float-right">
-              <button
-                className={`px-4 py-2 rounded text-white font-medium mr-4 ml-1 ${activeFilter === "notSent" ? "opacity-100" : "opacity-90"}`}
-                style={{ background: 'linear-gradient(195deg, #49a3f1, #1A73E8)' }}
-                onClick={() => {
-                  handleGetNotSent();
-                  setActiveFilter("notSent");
-                }}
-              >
-                Parcels Ready Send
-              </button>
-              <button
-                className={`px-4 py-2 rounded text-white font-medium mr-4 ml-1 ${activeFilter === "sent" ? "opacity-100" : "opacity-90"}`}
-                style={{ background: 'linear-gradient(195deg, #49a3f1, #1A73E8)' }}
-                onClick={() => {
-                  handleGetSent();
-                  setActiveFilter("sent");
-                }}
-              >
-                Parcels Sent
-              </button>
+          </div>
+
+          {/* Table Card */}
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
+            <div className="overflow-x-auto">
+              <DataTable table={dataTableData} canSearch />
             </div>
           </div>
         </div>
-        <DataTable table={dataTableData} canSearch />
       </div>
 
       {/* Modal */}

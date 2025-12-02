@@ -591,12 +591,12 @@ const PF_SingleListing = () => {
         {/* Modern Header with Gradient */}
         <div className="text-center mb-8">
           <div className="inline-block">
-            <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#132B43] via-[#1e4a6f] to-[#FF7D44] bg-clip-text text-transparent mb-3">
-              Get Instant Freight Quote
+            <h1 className="text-4xl md:text-5xl font-extrabold bg-black bg-clip-text text-transparent mb-3">
+              LOADLINK PARCEL FREIGHT 
             </h1>
-            <div className="h-1 w-full bg-gradient-to-r from-[#132B43] via-[#FF7D44] to-[#132B43] rounded-full"></div>
+           
           </div>
-          <p className="text-gray-600 mt-4 text-lg">Fast, reliable, and affordable parcel freight service</p>
+          <p className="text-gray-600 mt-4 text-lg">Your fast, reliable, and affordable parcel freight service</p>
         </div>
 
         {/* Main Form Card */}
@@ -807,7 +807,7 @@ const PF_SingleListing = () => {
                   </div>
                 </div>
                 
-                <div className="relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-6 shadow-lg group hover:shadow-2xl transition-all duration-300">
+                <div className="relative overflow-hidden bg-gradient-to-br from-gray-500 to-gray-700 rounded-2xl p-6 shadow-lg group hover:shadow-2xl transition-all duration-300">
                   <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
                   <div className="relative">
                     <p className="text-purple-200 text-sm font-medium mb-1">Total Weight</p>

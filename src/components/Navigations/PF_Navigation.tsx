@@ -29,6 +29,7 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
     pfform: false,
   });
   const [showAdminDropdown, setShowAdminDropdown] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   
   // Ensure component only renders on client after mounting
   useEffect(() => {
@@ -220,9 +221,9 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
 
               <a
                 className="ll-navlink text-decoration-none fw-semibold"
-                href="https://app.loadlink.com.au/listings/"
+                href=""
               >
-                General Freight
+                Loadlink Connect
               </a>
 
               {pf_user != null && <PFList />}
@@ -253,26 +254,85 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 </Link>
               </div>
             ) : (
-              <div className="flex gap-3">
+              <div className="flex gap-3 items-center">
                 <Link
                   href="/trade-application"
-                  className="btn btn-outline-primary"
-                  style={{ lineHeight: "35px" }}
+                  className="px-4 py-2.5 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg"
+                  style={{ 
+                    borderColor: '#FF7D44',
+                    color: '#FF7D44',
+                    backgroundColor: 'transparent'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#FF7D44';
+                    e.currentTarget.style.color = 'white';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = '#FF7D44';
+                  }}
                 >
                   Trade Account Application
                 </Link>
-                <Link
-                  className="btn btn-primary wgl-button"
-                  href="/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setApplicationMode("Parcel Freight");
-                    logout();
-                    router.push("/");
-                  }}
-                >
-                  Logout
-                </Link>
+                
+                {/* User Dropdown */}
+                <div className="relative">
+                  <button
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white hover:shadow-lg transition-all duration-200 cursor-pointer"
+                    onClick={() => setShowUserDropdown(!showUserDropdown)}
+                    onBlur={() => setTimeout(() => setShowUserDropdown(false), 200)}
+                  >
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 text-sm font-semibold">
+                      {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
+                    </div>
+                    <span className="font-medium">{pf_user?.name || 'User'}</span>
+                    <svg 
+                      className={`w-4 h-4 transition-transform duration-200 ${showUserDropdown ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+                  
+                  {showUserDropdown && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-100 overflow-hidden z-50">
+                      <div className="px-4 py-3 bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white">
+                        <p className="text-sm font-medium">{pf_user?.name || 'User'}</p>
+                        <p className="text-xs opacity-90">{pf_user?.email || ''}</p>
+                      </div>
+                      <div className="py-1">
+                        <Link
+                          href="/user-profile"
+                          className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
+                          onClick={() => setShowUserDropdown(false)}
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                          </svg>
+                          <span className="font-medium">User Profile</span>
+                        </Link>
+                        <hr className="my-1" />
+                        <button
+                          className="flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors w-full text-left cursor-pointer"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setApplicationMode("Parcel Freight");
+                            setShowUserDropdown(false);
+                            logout();
+                            router.push("/");
+                          }}
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                          </svg>
+                          <span className="font-medium">Logout</span>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
           </div>
@@ -294,9 +354,9 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
 
             <a
               className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded"
-              href="https://app.loadlink.com.au/listings/"
+              href=""
             >
-              General Freight
+              Loadlink Connect
             </a>
 
             {pf_user != null && (
@@ -338,16 +398,46 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 </Link>
               ) : (
                 <Fragment>
+                  {/* User Info Card */}
+                  <div className="px-4 py-3 bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white rounded-lg">
+                    <div className="flex items-center gap-3">
+                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 text-base font-semibold">
+                        {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">{pf_user?.name || 'User'}</p>
+                        <p className="text-xs opacity-90">{pf_user?.email || ''}</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Link
+                    href="/user-profile"
+                    className="flex items-center gap-3 px-4 py-2.5 text-gray-700 hover:bg-gray-50 rounded transition-colors cursor-pointer border border-gray-200"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                    <span className="font-medium">User Profile</span>
+                  </Link>
+                  
                   <Link
                     href="/trade-application"
-                    className="btn btn-outline-primary w-full text-center"
+                    className="px-4 py-2.5 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg w-full"
+                    style={{ 
+                      borderColor: '#FF7D44',
+                      color: '#FF7D44',
+                      backgroundColor: 'transparent',
+                      display: 'block'
+                    }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     Trade Account Application
                   </Link>
-                  <Link
-                    className="btn btn-primary wgl-button w-full text-center"
-                    href="/"
+                  
+                  <button
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 text-red-600 hover:bg-red-50 rounded transition-colors w-full border border-red-200 cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       setApplicationMode("Parcel Freight");
@@ -356,8 +446,11 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                       router.push("/");
                     }}
                   >
-                    Logout
-                  </Link>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                    </svg>
+                    <span className="font-medium">Logout</span>
+                  </button>
                 </Fragment>
               )}
             </div>
