@@ -10,6 +10,10 @@ import { Button, Card, Spinner } from "@/components/ui/ui";
 import PickupSuburbField from "./PF_PickupSuburbField.jsx";
 import DeliverySuburbField from "./PF_DeliverySuburbField.jsx";
 import PFDataRow from "./PF_DataRow.jsx";
+import { BuildingOfficeIcon } from "@heroicons/react/24/outline";
+import { HomeIcon } from "@heroicons/react/24/outline";
+
+import {BoltIcon, TruckIcon, CurrencyDollarIcon} from "@heroicons/react/24/outline";
 
 import { UserContext } from "@/contexts/UserContext";
 import PopupModal from "@/components/PopupModal/PopupModal/PopupModal.jsx";
@@ -51,7 +55,7 @@ const PF_SingleListing = () => {
   };
   const handleCloseModal = () => {
     setShowModal({ pfbutton: false, pfform: false });
-    router.push("/parcel-freight/"); // Navigate to the default Parcel Freight route
+    router.push("/parcel-freight/");
   };
   const { applicationMode, setApplicationMode } = useContext(ApplicationMode);
 
@@ -67,7 +71,7 @@ const PF_SingleListing = () => {
   );
   const [totalQty, setTotalQty] = useState(0);
   const [totalKgs, setTotalKgs] = useState(0);
-  const [totalVolume, setTotalVolume] = useState(0); // the default length, width and height value is 40, 20 and 1
+  const [totalVolume, setTotalVolume] = useState(0);
   const [modalShow, setModalShow] = useState(false);
 
   const fixedValues = {
@@ -189,9 +193,8 @@ const PF_SingleListing = () => {
     }
   };
 
-  // Function to remove a row
   const removeRow = (index) => {
-    if (index < 0 || index >= dataRows.length) return; // Safeguard invalid indices
+    if (index < 0 || index >= dataRows.length) return;
 
     const updatedRows = dataRows.filter((_, i) => i !== index);
     setDataRows(updatedRows);
@@ -220,7 +223,6 @@ const PF_SingleListing = () => {
     setTotalVolume(sumVolume);
   };
 
-  // Function to update a specific field in a specific row
   const updateRow = (rowIndex, key, value) => {
     setDataRows((prevRows) => {
       const updatedRows = [...prevRows];
@@ -243,7 +245,6 @@ const PF_SingleListing = () => {
 
       updatedRows[rowIndex] = updatedRow;
 
-      // Recalculate totals
       const currentTotalQty = updatedRows.reduce(
         (acc, r) => acc + Number(r.qty || 0),
         0
@@ -282,7 +283,6 @@ const PF_SingleListing = () => {
   const [error, setError] = useState(false);
   const [ajaxError, setAjaxError] = useState("");
 
-  // Handle form submission and prevent default behavior
   const handleSubmit = (event) => {
     event.preventDefault();
     if (currentPF_User == null || currentPF_User == "{}") {
@@ -465,7 +465,7 @@ const PF_SingleListing = () => {
             delivery_suburb: deliverySuburb,
             delivery_building_type: selectedDeliveryOption,
             pickup_building_type: selectedPickupOption,
-            dataRows: dataRows, // Save full dataRows array
+            dataRows: dataRows,
             totalQty: totalQty,
             totalKgs: totalKgs,
             totalVolume: totalVolume,
@@ -583,44 +583,37 @@ const PF_SingleListing = () => {
     }
   }, [pf_user]);
 
-  // Component's return JSX
   return (
-    <div className="min-h-screen py-8">
-      <div className="w-full">
+    <div className="min-h-screen py-6">
+      <div className="max-w-6xl mx-auto px-4">
         
-        {/* Modern Header with Gradient */}
-        <div className="text-center mb-8">
-          <div className="inline-block">
-            <h1 className="text-4xl md:text-5xl font-extrabold bg-black bg-clip-text text-transparent mb-3">
-              LOADLINK PARCEL FREIGHT 
-            </h1>
-           
-          </div>
-          <p className="text-gray-600 mt-4 text-lg">Your fast, reliable, and affordable parcel freight service</p>
+        <div className="text-center mb-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-[#193D5A] mb-3">
+            Get Instant Freight Quote
+          </h1>
+          <div className="h-1 w-40 mx-auto bg-gradient-to-r from-[#FF7D44] to-[#ff9066] rounded-full mb-3"></div>
+          <p className="text-gray-600 text-base">Fast, reliable, and affordable parcel freight service</p>
         </div>
 
-        {/* Main Form Card */}
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
+        <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
           <form onSubmit={handleSubmit} id="shipment-details" className="divide-y divide-gray-100">
             
-            {/* STEP 1: Location Details */}
-            <div className="p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg shadow-lg">
+            <div className="p-5 md:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-base shadow-md">
                   1
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">Location Details</h2>
+                <h2 className="text-xl font-bold text-gray-800">Location Details</h2>
               </div>
               
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Pickup Column */}
-                <div className="space-y-4 p-5 bg-gradient-to-br from-blue-50 to-slate-50 rounded-2xl border border-blue-100">
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="space-y-4 p-4 bg-gradient-to-br from-blue-50 to-slate-50 rounded-xl border border-blue-100">
                   <div className="flex items-center gap-2 mb-3">
                     <svg className="w-5 h-5 text-[#132B43]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <h3 className="font-bold text-gray-800">Pickup Details</h3>
+                    <h3 className="font-semibold text-base text-gray-800">Pickup Details</h3>
                   </div>
                   
                   <div>
@@ -634,7 +627,7 @@ const PF_SingleListing = () => {
                     />
                     {errors?.pickupSuburb && (
                       <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
                         {errors.pickupSuburb}
@@ -646,33 +639,35 @@ const PF_SingleListing = () => {
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Building Type <span className="text-red-500">*</span>
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-3">
                       <button
                         type="button"
                         onClick={() => handleClick_Pickup("Residential")}
-                        className={`py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
                           selectedPickupOption === "Residential"
-                            ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-lg scale-105'
-                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43] hover:shadow-md'
+                            ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-md scale-105'
+                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43]'
                         }`}
                       >
-                        🏠 Residential
+                        <HomeIcon className="w-5 h-5" />
+                        <span>Residential</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => handleClick_Pickup("Commercial")}
-                        className={`py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
                           selectedPickupOption === "Commercial"
-                            ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-lg scale-105'
-                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43] hover:shadow-md'
+                            ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-md scale-105'
+                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43]'
                         }`}
                       >
-                        🏢 Commercial
+                        <BuildingOfficeIcon className="w-5 h-5" />
+                        <span>Commercial</span>
                       </button>
                     </div>
                     {errors?.pickupOption && (
                       <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
                         {errors.pickupOption}
@@ -681,13 +676,12 @@ const PF_SingleListing = () => {
                   </div>
                 </div>
 
-                {/* Delivery Column */}
-                <div className="space-y-4 p-5 bg-gradient-to-br from-orange-50 to-slate-50 rounded-2xl border border-orange-100">
+                <div className="space-y-4 p-4 bg-gradient-to-br from-orange-50 to-slate-50 rounded-xl border border-orange-100">
                   <div className="flex items-center gap-2 mb-3">
                     <svg className="w-5 h-5 text-[#FF7D44]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
-                    <h3 className="font-bold text-gray-800">Delivery Details</h3>
+                    <h3 className="font-semibold text-base text-gray-800">Delivery Details</h3>
                   </div>
                   
                   <div>
@@ -701,7 +695,7 @@ const PF_SingleListing = () => {
                     />
                     {errors?.deliverySuburb && (
                       <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
                         {errors.deliverySuburb}
@@ -713,33 +707,35 @@ const PF_SingleListing = () => {
                     <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Building Type <span className="text-red-500">*</span>
                     </label>
-                    <div className="grid grid-cols-2 gap-2">
+                    <div className="grid grid-cols-2 gap-3">
                       <button
                         type="button"
                         onClick={() => handleClick_Delivery("Residential")}
-                        className={`py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
                           selectedDeliveryOption === "Residential"
-                            ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-lg scale-105'
-                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44] hover:shadow-md'
+                            ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-md scale-105'
+                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44]'
                         }`}
                       >
-                        🏠 Residential
+                        <HomeIcon className="w-5 h-5" />
+                        <span>Residential</span>
                       </button>
                       <button
                         type="button"
                         onClick={() => handleClick_Delivery("Commercial")}
-                        className={`py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
                           selectedDeliveryOption === "Commercial"
-                            ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-lg scale-105'
-                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44] hover:shadow-md'
+                            ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-md scale-105'
+                            : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44]'
                         }`}
                       >
-                        🏢 Commercial
+                        <BuildingOfficeIcon className="w-5 h-5" />
+                        <span>Commercial</span>
                       </button>
                     </div>
                     {errors?.deliveryOption && (
                       <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                        <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                         </svg>
                         {errors.deliveryOption}
@@ -750,15 +746,14 @@ const PF_SingleListing = () => {
               </div>
             </div>
 
-            {/* STEP 2: Package Information */}
-            <div className="p-6 md:p-8 bg-gray-50">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg shadow-lg">
+            <div className="p-5 md:p-6 bg-gray-50">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-base shadow-md">
                   2
                 </div>
                 <div className="flex-1">
-                  <h2 className="text-2xl font-bold text-gray-800">Package Information</h2>
-                  <p className="text-sm text-gray-600 mt-1">📏 All dimensions must be in centimeters (cm)</p>
+                  <h2 className="text-xl font-bold text-gray-800">Package Information</h2>
+                  <p className="text-xs text-gray-600">All dimensions must be in centimeters (cm)</p>
                 </div>
               </div>
 
@@ -777,7 +772,7 @@ const PF_SingleListing = () => {
                 <button
                   type="button"
                   onClick={addRow}
-                  className="w-full py-4 px-6 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-semibold rounded-xl hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-3 group hover:scale-[1.02]"
+                  className="w-full py-3 px-5 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-semibold text-base rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group hover:scale-[1.01]"
                 >
                   <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -787,125 +782,111 @@ const PF_SingleListing = () => {
               </div>
             </div>
 
-            {/* STEP 3: Summary & Dangerous Goods */}
-            <div className="p-6 md:p-8">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg shadow-lg">
+            <div className="p-5 md:p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-base shadow-md">
                   3
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800">Summary & Confirmation</h2>
+                <h2 className="text-xl font-bold text-gray-800">Summary & Confirmation</h2>
               </div>
               
-              {/* Summary Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="relative overflow-hidden bg-gradient-to-br from-[#132B43] to-[#1e4a6f] rounded-2xl p-6 shadow-lg group hover:shadow-2xl transition-all duration-300">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
-                  <div className="relative">
-                    <p className="text-blue-200 text-sm font-medium mb-1">Total Quantity</p>
-                    <p className="text-4xl font-bold text-white">{totalQty}</p>
-                    <p className="text-blue-200 text-xs mt-1">packages</p>
-                  </div>
+              <div className="grid grid-cols-3 gap-3 mb-5">
+                <div className="bg-gradient-to-br from-[#132B43] to-[#1e4a6f] rounded-xl p-4 shadow-md">
+                  <p className="text-blue-200 text-xs font-medium mb-1">Total Qty</p>
+                  <p className="text-3xl font-bold text-white">{totalQty}</p>
+                  <p className="text-blue-200 text-xs">packages</p>
                 </div>
                 
-                <div className="relative overflow-hidden bg-gradient-to-br from-gray-500 to-gray-700 rounded-2xl p-6 shadow-lg group hover:shadow-2xl transition-all duration-300">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
-                  <div className="relative">
-                    <p className="text-purple-200 text-sm font-medium mb-1">Total Weight</p>
-                    <p className="text-4xl font-bold text-white">{totalKgs}</p>
-                    <p className="text-purple-200 text-xs mt-1">kilograms</p>
-                  </div>
+                <div className="bg-gray-500 rounded-xl p-4 shadow-md">
+                  <p className="text-gray-200 text-xs font-medium mb-1">Weight</p>
+                  <p className="text-3xl font-bold text-white">{totalKgs}</p>
+                  <p className="text-gray-200 text-xs">kg</p>
                 </div>
                 
-                <div className="relative overflow-hidden bg-gradient-to-br from-[#FF7D44] to-[#ff9066] rounded-2xl p-6 shadow-lg group hover:shadow-2xl transition-all duration-300">
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
-                  <div className="relative">
-                    <p className="text-orange-100 text-sm font-medium mb-1">Total Volume</p>
-                    <p className="text-4xl font-bold text-white">{totalVolume}</p>
-                    <p className="text-orange-100 text-xs mt-1">cubic cm</p>
-                  </div>
+                <div className="bg-gradient-to-br from-[#FF7D44] to-[#ff9066] rounded-xl p-4 shadow-md">
+                  <p className="text-orange-100 text-xs font-medium mb-1">Volume</p>
+                  <p className="text-3xl font-bold text-white">{totalVolume}</p>
+                  <p className="text-orange-100 text-xs">cm³</p>
                 </div>
               </div>
 
-              {/* Dangerous Goods */}
-              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-6 mb-6 shadow-sm">
-                <div className="flex items-start gap-3 mb-4">
-                  <svg className="w-6 h-6 text-amber-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-xl p-4 mb-4">
+                <div className="flex items-start gap-2.5 mb-3">
+                  <svg className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
                   </svg>
                   <div className="flex-1">
-                    <h3 className="font-bold text-gray-800 text-lg mb-1">Dangerous Goods Declaration</h3>
-                    <p className="text-sm text-gray-600">Do any of the shipped goods contain dangerous materials?</p>
+                    <h3 className="font-bold text-gray-800 text-sm mb-1">Dangerous Goods</h3>
+                    <p className="text-xs text-gray-600">Does this shipment contain dangerous materials?</p>
                   </div>
                 </div>
                 
-                <div className="flex gap-4 mt-4">
+                <div className="flex gap-3">
                   <label className="flex-1 cursor-pointer">
-                    <div className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                    <div className={`p-3 rounded-lg border-2 transition-all duration-200 ${
                       isDanger === false 
-                        ? 'border-emerald-500 bg-emerald-50 shadow-md' 
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        ? 'border-emerald-500 bg-emerald-50 shadow-sm' 
+                        : 'border-gray-200 bg-white'
                     }`}>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <input
                           type="radio"
                           name="is_danger"
                           checked={isDanger === false}
                           onChange={() => setIsDanger(false)}
-                          className="w-5 h-5 accent-emerald-500 cursor-pointer"
+                          className="w-4 h-4 accent-emerald-500 cursor-pointer"
                         />
-                        <span className="font-semibold text-gray-800">No, safe to ship</span>
+                        <span className="font-semibold text-gray-800 text-sm">No</span>
                       </div>
                     </div>
                   </label>
                   
                   <label className="flex-1 cursor-pointer">
-                    <div className={`p-4 rounded-xl border-2 transition-all duration-200 ${
+                    <div className={`p-3 rounded-lg border-2 transition-all duration-200 ${
                       isDanger === true 
-                        ? 'border-red-500 bg-red-50 shadow-md' 
-                        : 'border-gray-200 bg-white hover:border-gray-300'
+                        ? 'border-red-500 bg-red-50 shadow-sm' 
+                        : 'border-gray-200 bg-white'
                     }`}>
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2.5">
                         <input
                           type="radio"
                           name="is_danger"
                           checked={isDanger === true}
                           onChange={() => setIsDanger(true)}
-                          className="w-5 h-5 accent-red-500 cursor-pointer"
+                          className="w-4 h-4 accent-red-500 cursor-pointer"
                         />
-                        <span className="font-semibold text-gray-800">Yes, contains dangerous goods</span>
+                        <span className="font-semibold text-gray-800 text-sm">Yes</span>
                       </div>
                     </div>
                   </label>
                 </div>
               </div>
 
-              {/* Important Notice */}
-              <div className="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-[#FF7D44] rounded-lg p-5 shadow-sm">
-                <div className="flex items-start gap-3">
-                  <svg className="w-6 h-6 text-[#FF7D44] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <div className="bg-gradient-to-r from-red-50 to-orange-50 border-l-4 border-[#FF7D44] rounded-lg p-4">
+                <div className="flex items-start gap-2.5">
+                  <svg className="w-5 h-5 text-[#FF7D44] flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                   </svg>
                   <div>
-                    <p className="font-bold text-gray-800 text-sm mb-1">⚠️ Important Notice</p>
-                    <p className="text-sm text-gray-700">
-                      Extra charges will apply for incorrect weights and/or dimensions. Please ensure all measurements are accurate to avoid additional fees.
+                    <p className="font-bold text-gray-800 text-sm mb-1">Important Notice</p>
+                    <p className="text-xs text-gray-700">
+                      Extra charges apply for incorrect weights/dimensions. Please ensure all measurements are accurate.
                     </p>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Submit Button */}
-            <div className="p-6 md:p-8 bg-gradient-to-br from-gray-50 to-slate-50">
+            <div className="p-5 md:p-6 bg-gradient-to-br from-gray-50 to-slate-50">
               {showPriceButton ? (
                 <button
                   type="submit"
                   disabled={isSubmitLoading}
-                  className="w-full py-5 px-8 bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 group"
+                  className="w-full py-4 px-6 bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] flex items-center justify-center gap-3 group"
                 >
                   {isSubmitLoading ? (
                     <>
-                      <svg className="animate-spin h-6 w-6" fill="none" viewBox="0 0 24 24">
+                      <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                         <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                       </svg>
@@ -914,7 +895,7 @@ const PF_SingleListing = () => {
                   ) : (
                     <>
                       Get Instant Pricing
-                      <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
                     </>
@@ -925,18 +906,18 @@ const PF_SingleListing = () => {
                   <button
                     type="button"
                     onClick={handleOpenModal}
-                    className="w-full py-5 px-8 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-bold text-xl rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 group"
+                    className="w-full py-4 px-6 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] flex items-center justify-center gap-3 group"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                     </svg>
                     Login to Get Pricing
-                    <svg className="w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </button>
-                  <p className="text-sm text-gray-600 mt-4">
-                    Already have an account? Login to view instant pricing and book your shipment.
+                  <p className="text-xs text-gray-600 mt-2.5">
+                    Login to view instant pricing and book your shipment.
                   </p>
                 </div>
               )}
@@ -945,28 +926,28 @@ const PF_SingleListing = () => {
           </form>
         </div>
 
-        {/* Trust Indicators */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-3xl mb-2">⚡</div>
-            <p className="font-semibold text-gray-800">Instant Quotes</p>
-            <p className="text-xs text-gray-600">Get pricing in seconds</p>
+        <div className="mt-6 grid grid-cols-3 gap-4">
+          <div className="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center">
+            <BoltIcon className="w-10 h-10 text-[#FF7D44] mb-2" />
+            <p className="font-semibold text-gray-800 text-sm">Instant Quotes</p>
+            <p className="text-xs text-gray-600 text-center">Get pricing in seconds</p>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-3xl mb-2">🚚</div>
-            <p className="font-semibold text-gray-800">Reliable Service</p>
-            <p className="text-xs text-gray-600">Track every shipment</p>
+
+          <div className="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center">
+            <TruckIcon className="w-10 h-10 text-[#FF7D44] mb-2" />
+            <p className="font-semibold text-gray-800 text-sm">Reliable Service</p>
+            <p className="text-xs text-gray-600 text-center">Track your shipment</p>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
-            <div className="text-3xl mb-2">💰</div>
-            <p className="font-semibold text-gray-800">Best Rates</p>
-            <p className="text-xs text-gray-600">Competitive pricing</p>
+
+          <div className="bg-white rounded-lg p-4 shadow-sm flex flex-col items-center">
+            <CurrencyDollarIcon className="w-10 h-10 text-[#FF7D44] mb-2" />
+            <p className="font-semibold text-gray-800 text-sm">Best Rates</p>
+            <p className="text-xs text-gray-600 text-center">Competitive pricing</p>
           </div>
         </div>
 
       </div>
 
-      {/* Modals */}
       <PopupModal
         show={isSubmitLoading && !error}
         message={isSubmitLoading ? "Loading, please wait..." : ajaxError}
@@ -982,7 +963,3 @@ const PF_SingleListing = () => {
 };
 
 export default PF_SingleListing;
-// What this code exports when it is imported in other files export default PF_SingleListing;
-
-
-

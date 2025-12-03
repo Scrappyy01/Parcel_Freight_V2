@@ -168,14 +168,18 @@ const PF_LoginForm = ({ handleClose }) => {
         )}
       </div>
 
-      <button
-        type="submit"
-        onClick={handleClick}
-        disabled={isLoading}
-        className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 disabled:from-gray-400 disabled:to-gray-400 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg disabled:shadow-none"
-      >
-        {isLoading ? 'Signing in...' : 'Sign in with Email'}
-      </button>
+<button
+  type="submit"
+  onClick={handleClick}
+  disabled={isLoading}
+  className={`w-full text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md ${
+    isLoading
+      ? 'bg-[#A0A0A0] shadow-none cursor-not-allowed'
+      : 'bg-[#193D5A] hover:bg-[#162f45] hover:shadow-lg'
+  }`}
+>
+  {isLoading ? 'Signing in...' : 'Sign in with Email'}
+</button>
     </div>
   );
 };

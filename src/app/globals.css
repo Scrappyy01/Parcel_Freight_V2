@@ -30,7 +30,8 @@
 .btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+              0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
 .btn:active {
@@ -43,37 +44,44 @@
   pointer-events: none;
 }
 
-/* Primary Button */
+/* Primary Button → Azul institucional */
 .btn-primary {
   color: white;
-  background: linear-gradient(195deg, #49a3f1, #1A73E8);
-  border-color: #1A73E8;
+  background: linear-gradient(195deg, var(--color-ll-blue), var(--color-ll-dark-blue));
+  border-color: var(--color-ll-dark-blue);
 }
 
 .btn-primary:hover {
-  background: linear-gradient(195deg, #3b8dd9, #1565c0);
+  background: linear-gradient(195deg, var(--color-ll-dark-blue), var(--color-ll-blue));
 }
 
-/* Outline Button */
+/* Outline Button → Azul institucional */
 .btn-outline-primary {
-  color: #1A73E8;
+  color: var(--color-ll-blue);
   background-color: transparent;
-  border-color: #1A73E8;
+  border-color: var(--color-ll-blue);
 }
 
 .btn-outline-primary:hover {
   color: white;
-  background-color: #1A73E8;
+  background-color: var(--color-ll-blue);
 }
 
-/* LoadLink Custom Button */
+/* LoadLink Custom Button → Laranja institucional */
 .wgl-button {
   padding: 0.625rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background: var(--color-ll-orange);
+  color: white;
+  border: none;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.wgl-button:hover {
+  background: #e66c36; /* tom mais escuro do laranja */
 }
 
 .wgl-button-save {
