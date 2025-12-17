@@ -86,7 +86,7 @@ export default function PF_FacebookButton({
     }
   };
 
-  const loginClass = `w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-lg border border-gray-300 transition duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed ${disable ? "opacity-50 cursor-not-allowed" : ""}`;
+  const loginClass = `w-full flex items-center justify-center gap-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold py-3 px-4 rounded-lg border border-gray-300 transition duration-200 shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer ${disable ? "opacity-50 cursor-not-allowed" : ""}`;
 
   return (
     <Fragment>

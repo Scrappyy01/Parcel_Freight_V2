@@ -643,7 +643,7 @@ const PF_SingleListing = () => {
                       <button
                         type="button"
                         onClick={() => handleClick_Pickup("Residential")}
-                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer ${
                           selectedPickupOption === "Residential"
                             ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-md scale-105'
                             : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43]'
@@ -655,7 +655,7 @@ const PF_SingleListing = () => {
                       <button
                         type="button"
                         onClick={() => handleClick_Pickup("Commercial")}
-                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer ${
                           selectedPickupOption === "Commercial"
                             ? 'bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-md scale-105'
                             : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#132B43]'
@@ -711,7 +711,7 @@ const PF_SingleListing = () => {
                       <button
                         type="button"
                         onClick={() => handleClick_Delivery("Residential")}
-                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer ${
                           selectedDeliveryOption === "Residential"
                             ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-md scale-105'
                             : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44]'
@@ -723,7 +723,7 @@ const PF_SingleListing = () => {
                       <button
                         type="button"
                         onClick={() => handleClick_Delivery("Commercial")}
-                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                        className={`flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg font-semibold text-sm transition-all duration-200 cursor-pointer ${
                           selectedDeliveryOption === "Commercial"
                             ? 'bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white shadow-md scale-105'
                             : 'bg-white border-2 border-gray-200 text-gray-700 hover:border-[#FF7D44]'
@@ -772,7 +772,7 @@ const PF_SingleListing = () => {
                 <button
                   type="button"
                   onClick={addRow}
-                  className="w-full py-3 px-5 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-semibold text-base rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group hover:scale-[1.01]"
+                  className="w-full py-3 px-5 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-semibold text-base rounded-lg hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 group hover:scale-[1.01] cursor-pointer"
                 >
                   <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -882,7 +882,7 @@ const PF_SingleListing = () => {
                 <button
                   type="submit"
                   disabled={isSubmitLoading}
-                  className="w-full py-4 px-6 bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] flex items-center justify-center gap-3 group"
+                  className="w-full py-4 px-6 bg-gradient-to-r from-[#FF7D44] to-[#ff9066] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed hover:scale-[1.01] flex items-center justify-center gap-3 group cursor-pointer"
                 >
                   {isSubmitLoading ? (
                     <>
@@ -906,7 +906,7 @@ const PF_SingleListing = () => {
                   <button
                     type="button"
                     onClick={handleOpenModal}
-                    className="w-full py-4 px-6 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] flex items-center justify-center gap-3 group"
+                    className="w-full py-4 px-6 bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white font-bold text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-[1.01] flex items-center justify-center gap-3 group cursor-pointer"
                   >
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
@@ -919,6 +919,88 @@ const PF_SingleListing = () => {
                   <p className="text-xs text-gray-600 mt-2.5">
                     Login to view instant pricing and book your shipment.
                   </p>
+                </div>
+              )}
+
+              {/* Error Summary Alert */}
+              {errors && Object.keys(errors).length > 0 && (
+                <div className="mt-6 bg-red-50 border-l-4 border-red-500 rounded-lg p-5 shadow-md">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-red-800 mb-2">Please fix the following errors:</h3>
+                      <ul className="space-y-1.5">
+                        {errors.pickupSuburb && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Pickup Location:</strong> {errors.pickupSuburb}</span>
+                          </li>
+                        )}
+                        {errors.pickupOption && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Pickup Building Type:</strong> {errors.pickupOption}</span>
+                          </li>
+                        )}
+                        {errors.deliverySuburb && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Delivery Location:</strong> {errors.deliverySuburb}</span>
+                          </li>
+                        )}
+                        {errors.deliveryOption && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Delivery Building Type:</strong> {errors.deliveryOption}</span>
+                          </li>
+                        )}
+                        {errors.packagingType && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Information:</strong> {errors.packagingType}</span>
+                          </li>
+                        )}
+                        {errors.qty && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Quantity:</strong> {errors.qty}</span>
+                          </li>
+                        )}
+                        {errors.kgs && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Weight:</strong> {errors.kgs}</span>
+                          </li>
+                        )}
+                        {errors.length && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Length:</strong> {errors.length}</span>
+                          </li>
+                        )}
+                        {errors.width && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Width:</strong> {errors.width}</span>
+                          </li>
+                        )}
+                        {errors.height && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Package Height:</strong> {errors.height}</span>
+                          </li>
+                        )}
+                        {errors.weight && (
+                          <li className="flex items-center gap-2 text-sm text-red-700">
+                            <span className="flex-shrink-0">•</span>
+                            <span><strong>Total Weight:</strong> {errors.weight}</span>
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

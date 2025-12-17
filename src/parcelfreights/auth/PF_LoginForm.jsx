@@ -172,7 +172,7 @@ const PF_LoginForm = ({ handleClose }) => {
   type="submit"
   onClick={handleClick}
   disabled={isLoading}
-  className={`w-full text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md ${
+  className={`w-full text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md cursor-pointer ${
     isLoading
       ? 'bg-[#A0A0A0] shadow-none cursor-not-allowed'
       : 'bg-[#193D5A] hover:bg-[#162f45] hover:shadow-lg'

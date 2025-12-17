@@ -226,7 +226,13 @@ function DataTable({
                 key={rowKey || key}
                 {...rowProps}
                 onClick={() => onRowClick && onRowClick(row)}
-                style={{ cursor: "pointer" }}
+                sx={{ 
+                  cursor: "pointer",
+                  backgroundColor: key % 2 === 0 ? "#ffffff" : "#fafafa",
+                  "&:hover": {
+                    backgroundColor: "#f5f5f5"
+                  }
+                }}
               >
                 {row.cells.map((cell) => {
                   const { key: cellKey, ...cellProps } = cell.getCellProps();

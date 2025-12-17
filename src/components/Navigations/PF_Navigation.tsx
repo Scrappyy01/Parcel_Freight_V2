@@ -209,18 +209,28 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
           </button>
 
           {/* Desktop menu - hidden on mobile */}
-          <div className="hidden lg:flex items-center justify-between flex-grow">
-            <div className="mx-3 flex gap-4 items-center">
+          <div className="hidden lg:flex items-center flex-grow ml-6">
+            {/* Left navigation items */}
+            <div className="flex gap-3 items-center flex-shrink-0">
               <Link
-                className="ll-navlink text-decoration-none fw-semibold"
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg font-semibold text-white transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105 cursor-pointer whitespace-nowrap relative ${
+                  pathname === '/parcel-freight' || pathname === '/' ? 'ring-2 ring-orange-300' : ''
+                }`}
+                style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}
                 href="/parcel-freight"
                 onClick={() => setApplicationMode("Parcel Freight")}
               >
-                New Booking 
+                <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                New Booking
+                {(pathname === '/parcel-freight' || pathname === '/') && (
+                  <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1/2 h-0.5 bg-white rounded-full"></span>
+                )}
               </Link>
 
               <a
-                className="ll-navlink text-decoration-none fw-semibold"
+                className="ll-navlink text-decoration-none fw-semibold whitespace-nowrap relative"
                 href=""
               >
                 Loadlink Connect
@@ -229,22 +239,29 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
               {pf_user != null && <PFList />}
               
               {dashboard}
-            </div>
-
-            {pf_user != null && pf_user?.user_roles?.admin && (
-              <Fragment>
+              
+              {pf_user != null && pf_user?.user_roles?.admin && (
                 <Link
-                  className="ll-navlink text-decoration-none fw-semibold"
+                  className={`ll-navlink text-decoration-none fw-semibold whitespace-nowrap relative pb-1 ${
+                    pathname.startsWith('/admin') ? 'text-[#FF7D44]' : ''
+                  }`}
                   href="/admin/all-parcel-freights/"
                   onClick={() => setApplicationMode("Parcel Freight")}
                 >
                   Admin
+                  {pathname.startsWith('/admin') && (
+                    <span className="absolute -bottom-0 left-0 right-0 h-0.5 bg-[#FF7D44] rounded-full"></span>
+                  )}
                 </Link>
-              </Fragment>
-            )}
+              )}
+            </div>
 
+            {/* Spacer */}
+            <div className="flex-grow" />
+
+            {/* Right side items */}
             {!pf_user || !pf_user?.isAuthenticated ? (
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-shrink-0">
                 <Link
                   className="btn btn-primary wgl-button"
                   href="/"
@@ -254,10 +271,10 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                 </Link>
               </div>
             ) : (
-              <div className="flex gap-3 items-center">
+              <div className="flex gap-3 items-center flex-shrink-0">
                 <Link
                   href="/trade-application"
-                  className="px-4 py-4 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg"
+                  className="px-3 py-2 rounded-lg border-2 text-center font-medium transition-all duration-200 hover:shadow-lg whitespace-nowrap text-sm"
                   style={{ 
                     borderColor: '#FF7D44',
                     color: '#FF7D44',
@@ -272,25 +289,39 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                     e.currentTarget.style.color = '#FF7D44';
                   }}
                 >
-                  Trade Account Application
+                  Trade Application
                 </Link>
                 
                 {/* User Dropdown */}
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   <button
-                    className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer border border-gray-200"
+                    className="flex items-center gap-2 px-2 py-2 rounded-lg hover:bg-gray-50 transition-all duration-200 cursor-pointer border border-gray-200"
                     onClick={() => setShowUserDropdown(!showUserDropdown)}
                     onBlur={() => setTimeout(() => setShowUserDropdown(false), 200)}
                   >
-                    <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-sm font-bold shadow-sm">
+                    {pf_user?.profile_photo_path ? (
+                      <img 
+                        src={pf_user.profile_photo_path} 
+                        alt={pf_user?.name || 'User'}
+                        className="w-9 h-9 rounded-full object-cover shadow-sm border border-gray-200 flex-shrink-0"
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                          (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex';
+                        }}
+                      />
+                    ) : null}
+                    <div 
+                      className="flex items-center justify-center w-9 h-9 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-sm font-bold shadow-sm flex-shrink-0"
+                      style={{ display: pf_user?.profile_photo_path ? 'none' : 'flex' }}
+                    >
                       {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
                     </div>
-                    <div className="flex flex-col items-start">
-                      <span className="font-semibold text-gray-900 text-sm leading-tight">{pf_user?.name || 'User'}</span>
+                    <div className="hidden xl:flex flex-col items-start min-w-0">
+                      <span className="font-semibold text-gray-900 text-sm leading-tight truncate max-w-[120px]">{pf_user?.name || 'User'}</span>
                       <span className="text-xs text-gray-500">View profile</span>
                     </div>
                     <svg 
-                      className={`w-4 h-4 text-gray-400 transition-transform duration-200 ml-1 ${showUserDropdown ? 'rotate-180' : ''}`} 
+                      className={`w-4 h-4 text-gray-400 transition-transform duration-200 flex-shrink-0 ${showUserDropdown ? 'rotate-180' : ''}`} 
                       fill="none" 
                       stroke="currentColor" 
                       viewBox="0 0 24 24"
@@ -303,7 +334,21 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                     <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden z-50 animate-fadeIn">
                       <div className="p-4 border-b border-gray-100">
                         <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-lg font-bold shadow-md">
+                          {pf_user?.profile_photo_path ? (
+                            <img 
+                              src={pf_user.profile_photo_path} 
+                              alt={pf_user?.name || 'User'}
+                              className="w-12 h-12 rounded-full object-cover shadow-md border border-gray-200"
+                              onError={(e) => {
+                                e.currentTarget.style.display = 'none';
+                                (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex';
+                              }}
+                            />
+                          ) : null}
+                          <div 
+                            className="flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-[#FF7D44] to-[#ff9f66] text-white text-lg font-bold shadow-md"
+                            style={{ display: pf_user?.profile_photo_path ? 'none' : 'flex' }}
+                          >
                             {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
                           </div>
                           <div className="flex-1 min-w-0">
@@ -365,13 +410,19 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
         <div className={`lg:hidden absolute top-[75px] left-0 right-0 bg-white shadow-lg transition-all duration-300 ease-in-out ${isMobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'}`}>
           <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
             <Link
-              className="ll-navlink text-decoration-none fw-semibold py-2 px-3 hover:bg-gray-100 rounded"
+              className={`inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg font-semibold text-white transition-all duration-200 shadow-md hover:shadow-lg cursor-pointer ${
+                pathname === '/parcel-freight' || pathname === '/' ? 'ring-2 ring-orange-300' : ''
+              }`}
+              style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}
               href="/parcel-freight"
               onClick={() => {
                 setApplicationMode("Parcel Freight");
                 setIsMobileMenuOpen(false);
               }}
             >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
               New Booking
             </Link>
 
@@ -424,7 +475,21 @@ const PF_Navigation = ({ onLogin, onLogout }: { onLogin: () => void; onLogout: (
                   {/* User Info Card */}
                   <div className="px-4 py-3 bg-gradient-to-br from-[#132B43] to-[#1a3a52] text-white rounded-lg">
                     <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 text-base font-semibold">
+                      {pf_user?.profile_photo_path ? (
+                        <img 
+                          src={pf_user.profile_photo_path} 
+                          alt={pf_user?.name || 'User'}
+                          className="w-10 h-10 rounded-full object-cover border border-white/30"
+                          onError={(e) => {
+                            e.currentTarget.style.display = 'none';
+                            (e.currentTarget.nextElementSibling as HTMLElement).style.display = 'flex';
+                          }}
+                        />
+                      ) : null}
+                      <div 
+                        className="flex items-center justify-center w-10 h-10 rounded-full bg-white/20 text-base font-semibold"
+                        style={{ display: pf_user?.profile_photo_path ? 'none' : 'flex' }}
+                      >
                         {pf_user?.name?.charAt(0).toUpperCase() || 'U'}
                       </div>
                       <div>

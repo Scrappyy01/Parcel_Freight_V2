@@ -2,6 +2,7 @@
 
 import React, { Fragment, useState, useContext } from "react";
 import { Modal } from "@/components/ui/ui";
+import loadlink from "@/assets/Loadlink-Logo.svg";
 
 import PFGoogleButton from "./PF_GoogleLoginButton";
 import PFFacebookButton from "./PF_FacebookLoginButton";
@@ -50,7 +51,7 @@ const PF_Auth_Buttons = ({ show, handleClose, handleData }) => {
           {/* Login content */}
           <div className="w-full md:w-12/12 flex flex-col justify-center px-6">
             <img
-              src="/images/loadlink-logo.png"
+              src={loadlink.src}
               alt="Loadlink Logo"
               className="mt-0 mb-6 mx-auto max-w-[400px]"
             />
@@ -98,7 +99,7 @@ const PF_Auth_Buttons = ({ show, handleClose, handleData }) => {
               <p className="text-gray-600 text-sm mb-3">Don't have an account?</p>
 <button
   onClick={clickRegister}
-  className="w-full bg-[#193D5A] hover:bg-[#162f45] text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg"
+  className="w-full bg-[#193D5A] hover:bg-[#162f45] text-white font-semibold py-3 px-4 rounded-lg transition duration-200 shadow-md hover:shadow-lg cursor-pointer"
 >
   Create a new account
 </button>

@@ -64,12 +64,21 @@ export default function UserProfilePage() {
             <div className="flex flex-col sm:flex-row items-center sm:items-end -mt-16 mb-6">
               {/* Profile Picture */}
               <div className="relative mb-4 sm:mb-0">
-                {pf_user?.profile_image ? (
-                  <img
-                    src={pf_user.profile_image}
-                    alt={pf_user.name}
-                    className="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover"
-                  />
+                {pf_user?.profile_photo_path ? (
+                  <>
+                    <img
+                      src={pf_user.profile_photo_path}
+                      alt={pf_user?.name || 'User'}
+                      className="w-32 h-32 rounded-full border-4 border-white shadow-xl object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        e.currentTarget.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl bg-gradient-to-br from-[#132B43] to-[#1a3a52] flex items-center justify-center" style={{ display: 'none' }}>
+                      <span className="text-white text-5xl font-bold">{userInitial}</span>
+                    </div>
+                  </>
                 ) : (
                   <div className="w-32 h-32 rounded-full border-4 border-white shadow-xl bg-gradient-to-br from-[#132B43] to-[#1a3a52] flex items-center justify-center">
                     <span className="text-white text-5xl font-bold">{userInitial}</span>

@@ -253,11 +253,24 @@ function PF_Ecommerce_List() {
     { Header: "Freight ID", accessor: "freight_id", width: "10%" },
     { Header: "eComm Order No.", accessor: "external_order_no" },
     { Header: "Name", accessor: "user_name" },
-    { Header: "Freight Service", accessor: "service_type" },
+    { 
+      Header: "Freight Service", 
+      accessor: "service_type",
+      Cell: ({ value }) => (
+        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+          {value}
+        </span>
+      )
+    },
     { Header: "Collection date", accessor: "date" },
     {
       Header: "pickup",
       accessor: "pickup",
+      Cell: ({ value }) => (
+        <span className="text-sm text-gray-700 truncate max-w-[150px] inline-block" title={value}>
+          {value}
+        </span>
+      )
     },
     {
       Header: "delivery",
@@ -265,8 +278,9 @@ function PF_Ecommerce_List() {
       Cell: ({ row }) => {
         const freight = row.original;
         const dropoffInfo = freight.address_dropoff;
+        const fullAddress = `${dropoffInfo?.company_contact_name || ""}\n${dropoffInfo?.company_email || ""}\n${dropoffInfo?.address1 || ""}\n${dropoffInfo?.suburb || ""} ${dropoffInfo?.state || ""} ${dropoffInfo?.postcode || ""}`;
         return (
-          <span title={`${dropoffInfo?.company_contact_name || ""}\n${dropoffInfo?.company_email || ""}\n${dropoffInfo?.address1 || ""}\n${dropoffInfo?.suburb || ""} ${dropoffInfo?.state || ""} ${dropoffInfo?.postcode || ""}`}>
+          <span className="text-sm text-gray-700 truncate max-w-[150px] inline-block" title={fullAddress}>
             {freight?.delivery}
           </span>
         );
@@ -498,67 +512,79 @@ function PF_Ecommerce_List() {
           </div>
 
           {/* Controls Card */}
-          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
-            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
-              {/* Left: Action Buttons */}
-              <div className="flex flex-wrap items-center gap-3">
-                <button
-                  className="px-6 py-2.5 rounded-lg text-white font-medium shadow-sm hover:shadow-md transition-all disabled:opacity-60 cursor-pointer hover:cursor-pointer"
-                  style={{ background: 'linear-gradient(195deg, #132B43, #1a3a52)' }}
-                  onClick={handleGenerateLabels}
-                  disabled={selectedRows.length === 0 || booking}
-                >
-                  {booking ? (
-                    <>
-                      <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mr-2"></div>
-                      Booking...
-                    </>
-                  ) : (
-                    <>
-                      <svg className="inline-block w-4 h-4 mr-2 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      Book Freight ({selectedRows.length})
-                    </>
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-8">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+              {/* Left: Selection Actions */}
+              <div className="flex flex-col gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  {showCheckbox && (
+                    <label className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors">
+                      <input
+                        type="checkbox"
+                        checked={isAllSelected}
+                        onChange={handleSelectAll}
+                        className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                      />
+                      <span className="text-sm font-medium text-gray-700 cursor-pointer">Select All</span>
+                    </label>
                   )}
-                </button>
+                  
+                  <button
+                    className="px-6 py-2.5 rounded-lg text-white font-medium shadow-sm hover:shadow-md transition-all disabled:opacity-60 cursor-pointer hover:cursor-pointer"
+                    style={{ background: 'linear-gradient(195deg, #132B43, #1a3a52)' }}
+                    onClick={handleGenerateLabels}
+                    disabled={selectedRows.length === 0 || booking}
+                  >
+                    {booking ? (
+                      <>
+                        <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mr-2"></div>
+                        Booking...
+                      </>
+                    ) : (
+                      <>
+                        <svg className="inline-block w-4 h-4 mr-2 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        Book Freight ({selectedRows.length})
+                      </>
+                    )}
+                  </button>
 
-                {showCheckbox && (
-                  <label className="flex items-center gap-2 px-4 py-2 bg-gray-50 rounded-lg border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors">
-                    <input
-                      type="checkbox"
-                      checked={isAllSelected}
-                      onChange={handleSelectAll}
-                      className="w-4 h-4 text-blue-600 rounded focus:ring-2 focus:ring-blue-500 cursor-pointer"
-                    />
-                    <span className="text-sm font-medium text-gray-700 cursor-pointer">Select All</span>
-                  </label>
+                  {/* Center: Date Picker */}
+                  <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 border border-gray-200">
+                    <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                      Collection Date
+                    </label>
+                    <div className="date-picker-wrapper">
+                      <DatePicker
+                        selected={startDate}
+                        dateFormat={"dd/MM/yyyy"}
+                        onChange={handleOnChange}
+                        name="pickup_date"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#FF7D44] focus:border-transparent cursor-pointer"
+                        minDate={minDateDP}
+                        maxDate={maxDateDP}
+                        filterDate={filterDate}
+                        wrapperClassName="w-full"
+                        calendarClassName="border border-gray-200 rounded-lg shadow-lg"
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Helper text when nothing selected */}
+                {selectedRows.length === 0 && showCheckbox && (
+                  <p className="text-sm text-gray-500 ml-1 flex items-center gap-1.5">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Select one or more parcels to book freight.
+                  </p>
                 )}
               </div>
 
-              {/* Center: Date Picker */}
-              <div className="flex items-center gap-3 bg-gray-50 rounded-lg px-4 py-2 border border-gray-200">
-                <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-                  Collection Date
-                </label>
-                <div className="date-picker-wrapper">
-                  <DatePicker
-                    selected={startDate}
-                    dateFormat={"dd/MM/yyyy"}
-                    onChange={handleOnChange}
-                    name="pickup_date"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-[#FF7D44] focus:border-transparent"
-                    minDate={minDateDP}
-                    maxDate={maxDateDP}
-                    filterDate={filterDate}
-                    wrapperClassName="w-full"
-                    calendarClassName="border border-gray-200 rounded-lg shadow-lg"
-                  />
-                </div>
-              </div>
-
               {/* Right: Filter Buttons */}
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-shrink-0">
                 <button
                   className={`px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
                     activeFilter === "notSent"
@@ -593,9 +619,39 @@ function PF_Ecommerce_List() {
 
           {/* Table Card */}
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden w-full">
-            <div className="overflow-x-auto">
-              <DataTable table={dataTableData} canSearch />
-            </div>
+            {tableData.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 px-4">
+                <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mb-6">
+                  <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  {activeFilter === "notSent" ? "No Parcels Ready to Send" : "No Sent Parcels"}
+                </h3>
+                <p className="text-gray-500 text-center mb-6 max-w-md">
+                  {activeFilter === "notSent" 
+                    ? "There are currently no parcels ready to be sent. Create a new booking to get started."
+                    : "You haven't sent any parcels yet. Book freight to see them here."}
+                </p>
+                {activeFilter === "notSent" && (
+                  <button
+                    onClick={() => router.push('/parcel-freight')}
+                    className="px-6 py-3 rounded-lg text-white font-medium shadow-md hover:shadow-lg transition-all cursor-pointer"
+                    style={{ background: 'linear-gradient(195deg, #FF7D44, #ff9066)' }}
+                  >
+                    <svg className="inline-block w-5 h-5 mr-2 -mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    Create New Booking
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <DataTable table={dataTableData} canSearch />
+              </div>
+            )}
           </div>
         </div>
       </div>

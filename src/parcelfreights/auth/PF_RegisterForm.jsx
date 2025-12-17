@@ -2,6 +2,7 @@
 
 import { Fragment, useState, useContext } from "react";
 import Modal from "@/components/ui/ui/Modal";
+import loadlink from "@/assets/Loadlink-Logo.svg";
 
 import { validateEmail } from "../../utils/helpers";
 import { UserContext } from "../../contexts/UserContext";
@@ -86,7 +87,7 @@ const PF_RegisterForm = ({ registerShow, handleClose }) => {
 <div className="space-y-6">
   {/* Logo acima do formulário */}
   <img
-    src="/images/loadlink-logo.png"
+    src={loadlink.src}
     alt="Loadlink Logo"
     className="mt-0 mb-6 mx-auto max-w-[400px]"
   />

@@ -181,7 +181,7 @@ const DataRow = ({
                   <input
                     type="text"
                     inputMode="decimal"
-                    placeholder="0.00"
+                    placeholder={focusedField === "kgs" ? "" : "0.00"}
                     value={
                       localRowData.kgsRaw ?? localRowData.kgs?.toString() ?? ""
                     }

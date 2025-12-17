@@ -81,165 +81,261 @@ const PF_Address_Details_Form = ({
   return (
     <>
       <div className="lg:col-span-6 md:col-span-6 sm:col-span-12">
-        <h3 className="capitalize">{deliveryType} address</h3>
-        <div className="pfs-input-form-group">
-          <div className="pfs-input-form-group">
-            <label className="pfs-input-label">State *</label>
-            <select
-              className="pfs-input"
-              name={`${deliveryType}_state`}
-              readOnly={deliveryType !== "sender"}
-              onChange={deliveryType === "sender" ? onChange : undefined}
-              value={getFieldValue("state")}
-            >
-              <option value="">Select State</option>
-              {AU_STATE.map((state, index) => (
-                <option key={index} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-            {hasError && !state && (
-              <p className="text-xs text-red-600 mt-1">
-                {deliveryType} state cannot be empty
-              </p>
+        <div className="bg-gradient-to-br from-blue-50 to-slate-50 rounded-xl p-6 border border-blue-100 shadow-sm">
+          <div className="flex items-center justify-between gap-3 mb-6 pb-4 border-b border-blue-200">
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-[#132B43] to-[#1e4a6f] text-white shadow-md">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 capitalize">{deliveryType} Address</h3>
+            </div>
+            {(deliveryType === "pickup" || deliveryType === "dropoff") && (
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-white border-2 border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all cursor-pointer shadow-sm"
+                >
+                  Address Book
+                </button>
+                <button
+                  type="button"
+                  className="px-4 py-2 bg-white border-2 border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all cursor-pointer shadow-sm"
+                >
+                  Save Address
+                </button>
+              </div>
             )}
           </div>
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">City / Suburb *</label>
-          <input
-            className="pfs-input"
-            name={`${deliveryType}_suburb`}
-            readOnly={deliveryType !== "sender"}
-            onChange={deliveryType === "sender" ? onChange : undefined}
-            value={getFieldValue("suburb")}
-          />
-          {hasError && !suburb && (
-            <p className="text-xs text-red-600 mt-1">
-              {deliveryType} suburb cannot be empty
-            </p>
-          )}
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Postcode *</label>
-          <input
-            className="pfs-input"
-            name={`${deliveryType}_postcode`}
-            readOnly={deliveryType !== "sender"}
-            onChange={deliveryType === "sender" ? onChange : undefined}
-            value={getFieldValue("postcode") || ""}
-          />
-          {hasError && !postcode && (
-            <p className="text-xs text-red-600 mt-1">
-              {deliveryType} postcode cannot be empty
-            </p>
-          )}
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Address 1 *</label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_address1`}
-            value={getFieldValue("address1") || ""}
-            onChange={onChange}
-          />
-          {hasError && (!address1 || address1.trim().length === 0) && (
-            <p className="text-xs text-red-600 mt-1">
-              {deliveryType} address cannot be empty
-            </p>
-          )}
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Address 2</label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_address2`}
-            value={getFieldValue("address2") || ""}
-            onChange={onChange}
-          />
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Address 3</label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_address3`}
-            value={getFieldValue("address3") || ""}
-            onChange={onChange}
-          />
+          
+          <div className="space-y-4">
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">State *</label>
+              <select
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all cursor-pointer ${
+                  hasError && !state ? 'border-red-500' : 'border-gray-200'
+                }`}
+                name={`${deliveryType}_state`}
+                readOnly={deliveryType !== "sender"}
+                onChange={deliveryType === "sender" ? onChange : undefined}
+                value={getFieldValue("state")}
+              >
+                <option value="">Select State</option>
+                {AU_STATE.map((state, index) => (
+                  <option key={index} value={state}>
+                    {state}
+                  </option>
+                ))}
+              </select>
+              {hasError && !state && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {deliveryType} state cannot be empty
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">City / Suburb *</label>
+              <input
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && !suburb ? 'border-red-500' : 'border-gray-200'
+                } ${deliveryType !== "sender" ? 'bg-gray-50' : ''}`}
+                name={`${deliveryType}_suburb`}
+                readOnly={deliveryType !== "sender"}
+                onChange={deliveryType === "sender" ? onChange : undefined}
+                value={getFieldValue("suburb")}
+              />
+              {hasError && !suburb && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {deliveryType} suburb cannot be empty
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Postcode *</label>
+              <input
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && !postcode ? 'border-red-500' : 'border-gray-200'
+                } ${deliveryType !== "sender" ? 'bg-gray-50' : ''}`}
+                name={`${deliveryType}_postcode`}
+                readOnly={deliveryType !== "sender"}
+                onChange={deliveryType === "sender" ? onChange : undefined}
+                value={getFieldValue("postcode") || ""}
+              />
+              {hasError && !postcode && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {deliveryType} postcode cannot be empty
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Address 1 *</label>
+              <input
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && (!address1 || address1.trim().length === 0) ? 'border-red-500' : 'border-gray-200'
+                }`}
+                name={`${deliveryType}_address1`}
+                value={getFieldValue("address1") || ""}
+                onChange={onChange}
+              />
+              {hasError && (!address1 || address1.trim().length === 0) && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  {deliveryType} address cannot be empty
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Address 2</label>
+              <input
+                className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-lg text-gray-900 outline-none transition-all"
+                name={`${deliveryType}_address2`}
+                value={getFieldValue("address2") || ""}
+                onChange={onChange}
+                placeholder="Apartment, suite, unit, etc. (optional)"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Address 3</label>
+              <input
+                className="w-full px-4 py-3 bg-white border-2 border-gray-200 rounded-lg text-gray-900 outline-none transition-all"
+                name={`${deliveryType}_address3`}
+                value={getFieldValue("address3") || ""}
+                onChange={onChange}
+                placeholder="Additional address information (optional)"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div className="lg:col-span-6 md:col-span-6 sm:col-span-12">
-        <h3 className="capitalize">
-          {deliveryType} contact details
-        </h3>
-        {isCompany && (
-          <div className="pfs-input-form-group">
-            <label className="pfs-input-label">Company Name</label>
-            <input
-              className="pfs-input flex items-center"
-              name={`${deliveryType}_company_name`}
-              value={getFieldValue("company_name") || ""}
-              onChange={onChange}
-            />
-            {hasError && !companyName && (
-              <p className="text-xs text-red-600 mt-1">
-                Please enter a valid company name.
-              </p>
-            )}
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 border border-orange-100 shadow-sm">
+          <div className="flex items-center gap-3 mb-6 pb-4 border-b border-orange-200">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-[#FF7D44] to-[#ff9966] text-white shadow-md">
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </div>
+            <h3 className="text-xl font-bold text-gray-800 capitalize">{deliveryType} Contact Details</h3>
           </div>
-        )}
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">
-            Contact Full Name *
-          </label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_company_contact_name`}
-            value={getFieldValue("company_contact_name") || ""}
-            onChange={onChange}
-          />
-          {hasError && !contactName && (
-            <p className="text-xs text-red-600 mt-1">
-              Please enter a valid contact full name.
-            </p>
-          )}
-          {hasError && contactName && !contactName.trim().includes(" ") && (
-            <p className="text-xs text-red-600 mt-1">
-              Please enter a valid contact full name, e.g. Firstname Lastname
-            </p>
-          )}
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Email Address *</label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_company_email`}
-            value={getFieldValue("company_email") || ""}
-            onChange={onChange}
-          />
-          {hasError && !validateEmail(email) && (
-            <p className="text-xs text-red-600 mt-1">
-              Please enter a valid email.
-            </p>
-          )}
-        </div>
-        <div className="pfs-input-form-group">
-          <label className="pfs-input-label">Phone No. *</label>
-          <input
-            className="pfs-input flex items-center"
-            name={`${deliveryType}_company_phone`}
-            value={getFieldValue("company_phone") || ""}
-            onChange={onChange}
-          />
-          {hasError &&
-            (!phone ||
-              phone.trim().length === 0 ||
-              !validatePhoneNumber(phone)) && (
-              <p className="text-xs text-red-600 mt-1">
-                Please enter a valid Australia phone number.
-              </p>
+          
+          <div className="space-y-4">
+            {isCompany && (
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Company Name</label>
+                <input
+                  className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                    hasError && !companyName ? 'border-red-500' : 'border-gray-200'
+                  }`}
+                  name={`${deliveryType}_company_name`}
+                  value={getFieldValue("company_name") || ""}
+                  onChange={onChange}
+                  placeholder="Enter company name"
+                />
+                {hasError && !companyName && (
+                  <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    Please enter a valid company name.
+                  </p>
+                )}
+              </div>
             )}
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Contact Full Name *</label>
+              <input
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && !contactName ? 'border-red-500' : 'border-gray-200'
+                }`}
+                name={`${deliveryType}_company_contact_name`}
+                value={getFieldValue("company_contact_name") || ""}
+                onChange={onChange}
+                placeholder="Enter contact person's full name"
+              />
+              {hasError && !contactName && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  Please enter a valid contact full name.
+                </p>
+              )}
+              {hasError && contactName && !contactName.trim().includes(" ") && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  Please enter a valid contact full name, e.g. Firstname Lastname
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Email Address *</label>
+              <input
+                type="email"
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && !validateEmail(email) ? 'border-red-500' : 'border-gray-200'
+                }`}
+                name={`${deliveryType}_company_email`}
+                value={getFieldValue("company_email") || ""}
+                onChange={onChange}
+                placeholder="contact@company.com"
+              />
+              {hasError && !validateEmail(email) && (
+                <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                  <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                  </svg>
+                  Please enter a valid email.
+                </p>
+              )}
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Phone No. *</label>
+              <input
+                type="tel"
+                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                  hasError && (!phone || phone.trim().length === 0 || !validatePhoneNumber(phone)) ? 'border-red-500' : 'border-gray-200'
+                }`}
+                name={`${deliveryType}_company_phone`}
+                value={getFieldValue("company_phone") || ""}
+                onChange={onChange}
+                placeholder="0400 000 000"
+              />
+              {hasError &&
+                (!phone ||
+                  phone.trim().length === 0 ||
+                  !validatePhoneNumber(phone)) && (
+                  <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
+                    <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                    </svg>
+                    Please enter a valid Australia phone number.
+                  </p>
+                )}
+            </div>
+          </div>
         </div>
       </div>
     </>

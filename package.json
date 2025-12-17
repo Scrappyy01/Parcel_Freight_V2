@@ -32,7 +32,7 @@
     "date-holidays": "^3.26.5",
     "downshift": "^9.0.10",
     "luxon": "^3.7.2",
-    "next": "^16.0.3",
+    "next": "16.0.10",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-autosuggest": "^10.1.0",

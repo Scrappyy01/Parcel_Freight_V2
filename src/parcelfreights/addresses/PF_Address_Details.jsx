@@ -368,26 +368,28 @@ function PF_Address_Details({ onSubmitParcelFreightAddress, onBack }) {
             {errorMessage}
           </Typography>
         )}
-        <div className="flex justify-end gap-4 mt-6">
-          <Button
+        <div className="flex justify-center items-center gap-4 mt-8">
+          <button
             type="button"
-            variant="contained"
-            color="primary"
-            className="w-1/2"
             onClick={handleGoBack}
+            className="px-8 py-3 bg-white border-2 border-gray-300 rounded-lg text-sm font-semibold text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all cursor-pointer shadow-sm flex items-center gap-2"
           >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
             Back
-          </Button>
+          </button>
 
-          <Button
+          <button
             type="submit"
             form="page-three-address"
-            variant="contained"
-            color="primary"
-            className="w-1/2"
+            className="px-8 py-3 bg-gradient-to-r from-[#FF7D44] to-[#ff9966] text-white rounded-lg text-sm font-semibold hover:shadow-lg transition-all cursor-pointer shadow-md flex items-center gap-2"
           >
             Next
-          </Button>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
         </div>
       </form>
     </Fragment>

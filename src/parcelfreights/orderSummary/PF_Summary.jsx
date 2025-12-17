@@ -111,12 +111,22 @@ const PF_Summary = ({ onBack, onStatus }) => {
           </div>
 
           {/* Shipment ID Banner */}
-          <div className="rounded-xl shadow-xl p-8" style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}>
+          <div 
+            onClick={handleDownloadLabel}
+            className="rounded-xl shadow-xl p-8 cursor-pointer hover:shadow-2xl transform hover:scale-[1.02] transition-all duration-300" 
+            style={{ background: 'linear-gradient(to right, #FF7D44, #ff9066)' }}
+          >
             <div className="text-center">
               <p className="text-white text-sm font-semibold mb-1">Shipment Details</p>
-              <h2 className="text-5xl font-bold text-white tracking-wider">
+              <h2 className="text-5xl font-bold text-white tracking-wider mb-3">
                 {collection?.order_code || "N/A"}
               </h2>
+              <div className="flex items-center justify-center gap-2 text-white opacity-90">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M9 19l3 3m0 0l3-3m-3 3V10" />
+                </svg>
+                <span className="text-sm font-medium">Click to Generate Label</span>
+              </div>
             </div>
           </div>
 
