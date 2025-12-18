@@ -422,7 +422,7 @@ const PF_Fedex_Extra_Form = ({
 
   return (
     <>
-      <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl p-6 border border-gray-200 shadow-sm">
+      <div className="bg-gradient-to-br from-gray-50 to-slate-50 rounded-xl mx-auto   p-6 border border-gray-200 shadow-sm">
         <div className="mb-6">
           <div className="flex items-center gap-3 mb-4 pb-3 border-b border-gray-300">
             <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-gray-500 to-gray-600 text-white shadow-md">

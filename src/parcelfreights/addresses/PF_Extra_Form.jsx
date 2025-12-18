@@ -187,7 +187,7 @@ const PF_Extra_Form = ({
       <div>
         <div className="mb-4">
           <label className="pfs-input-label mr-3">
-            Select a Collection Date &nbsp;
+            Select a Collection Date HERE &nbsp;
           </label>
           <div className="react-datepicker-column">
             <DatePicker

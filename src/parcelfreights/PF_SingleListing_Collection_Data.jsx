@@ -15,7 +15,6 @@ import { isEmpty, isNumber } from "lodash";
 import ParcelFreightAddress from "./addresses/PF_Address_Details";
 import ParcelFreightDetail from "./details/Parcel_Freight_detail.jsx";
 
-import loadlink from "@/assets/ll-logo.svg";
 import loadlinkLogo from "@/assets/Loadlink-Logo.svg";
 import PFSingleListingConfirmInfo from "./confirmInfo/PF_SingleListing_Confirm_Info.jsx";
 import Payment from "./payments/Payment.jsx";
@@ -218,14 +217,14 @@ const PF_SingleListing_Collection_Data = () => {
             >
               
               {/* Custom Tabs Navigation */}
-              <div className="border-b border-gray-200 mb-3">
-                <nav className="flex -mb-px">
+              <div className="border-b border-gray-200 mb-3 overflow-x-auto">
+                <nav className="flex -mb-px min-w-max md:min-w-0">
                   <button
                     onClick={() => !disableJob && setActiveKey("job-data")}
                     disabled={disableJob}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                    className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                       activeKey === "job-data"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                        ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                         : "text-gray-600"
                     } ${disableJob ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
@@ -234,9 +233,9 @@ const PF_SingleListing_Collection_Data = () => {
                   <button
                     onClick={() => !disableAddress && setActiveKey("collection")}
                     disabled={disableAddress}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                    className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                       activeKey === "collection"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                        ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                         : "text-gray-600"
                     } ${disableAddress ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
@@ -246,9 +245,9 @@ const PF_SingleListing_Collection_Data = () => {
                     <button
                       onClick={() => !disablePayment && setActiveKey("payment")}
                       disabled={disablePayment}
-                      className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                      className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                         activeKey === "payment"
-                          ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                          ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                           : "text-gray-600"
                       } ${disablePayment ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                     >
@@ -258,9 +257,9 @@ const PF_SingleListing_Collection_Data = () => {
                   <button
                     onClick={() => !disableConfirmation && setActiveKey("confirmation")}
                     disabled={disableConfirmation}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                    className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                       activeKey === "confirmation"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                        ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                         : "text-gray-600"
                     } ${disableConfirmation ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
@@ -269,9 +268,9 @@ const PF_SingleListing_Collection_Data = () => {
                   <button
                     onClick={() => !disableSummary && setActiveKey("summary")}
                     disabled={disableSummary}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                    className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                       activeKey === "summary"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                        ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                         : "text-gray-600"
                     } ${disableSummary ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
@@ -280,9 +279,9 @@ const PF_SingleListing_Collection_Data = () => {
                   <button
                     onClick={() => !disableTracking && setActiveKey("tracking")}
                     disabled={disableTracking}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
+                    className={`py-3 px-4 md:py-4 md:px-6 block hover:text-orange-600 focus:outline-none whitespace-nowrap text-sm md:text-base ${
                       activeKey === "tracking"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
+                        ? "border-b-2 border-orange-600 text-orange-600 font-medium"
                         : "text-gray-600"
                     } ${disableTracking ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >

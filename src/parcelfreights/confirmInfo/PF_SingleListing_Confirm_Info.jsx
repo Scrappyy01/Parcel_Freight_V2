@@ -145,34 +145,44 @@ function PF_SingleListing_Confirm_Info({
   }, [status, onSubmitParcelFreightConfirmation]);
 
   return (
-    <div style={{ fontSize: "14px" }}>
-      <div className="my-6">
+    <div className="text-sm">
+      <div className="my-6 space-y-6">
         <PFConsignmentSummary
           collectionData={collectionData}
           addressData={addressData}
           parcelFreightData={parcelFreightData}
         />
 
-        <div style={{ marginBottom: "50px" }}>
-          <h4>Additional Information</h4>
-          <ul className="pfs-mesNote " style={{ textAlign: "left" }}>
-            <li>
-              <span className="mesNote">
+        <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-600">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 className="text-lg font-semibold text-gray-800">Additional Information</h4>
+          </div>
+          <ul className="space-y-4 text-gray-700">
+            <li className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#FF7D44] mt-2"></div>
+              <span className="leading-relaxed">
                 All goods must be packed into a carton or on a
                 pallet/skid/crate. Items must be packaged at or above
-                Manufactureers packaging specifications, so other freight can be
+                Manufacturer's packaging specifications, so other freight can be
                 stacked safely on and around your consignment.
               </span>
             </li>
-            <li>
-              <span className="mesNote">
+            <li className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#FF7D44] mt-2"></div>
+              <span className="leading-relaxed">
                 If using a pallet or a skid, the goods must still be packed into
                 a carton or a crate, then strapped + wrapped onto the
                 skid/pallet. The freight must not overhang the pallet.
               </span>
             </li>
-            <li>
-              <span className="mesNote">
+            <li className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#FF7D44] mt-2"></div>
+              <span className="leading-relaxed">
                 Correct declaration of weight and dimensions - Can you please
                 ensure that you indicate the correct weight and dimensions of
                 your carton. If it is under-weighted, or over your specified
@@ -181,11 +191,12 @@ function PF_SingleListing_Confirm_Info({
                 Of Responsibility laws.
               </span>
             </li>
-            <li>
-              <span className="mesNote">
+            <li className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#FF7D44] mt-2"></div>
+              <span className="leading-relaxed">
                 The Consignment Note supplied via email after booking MUST be
                 attached to the item(s) before pickup. Failure to have the
-                consignment note attached will result in a Futiile Pickup
+                consignment note attached will result in a Futile Pickup
                 Charge.
               </span>
             </li>
@@ -217,127 +228,141 @@ function PF_SingleListing_Confirm_Info({
         <form
           onSubmit={handleSubmit}
           id="page-four-confirm"
-          className="XXcontainer bg-[rgb(247,243,235)] rounded-xl w-full p-4"
+          className="bg-white rounded-xl shadow-sm p-6"
         >
-          <div className="grid grid-cols-1">
-            <div className="lg:col-span-12 md:col-span-12 sm:col-span-12">
-              <h4>LoadLink Transit Warranty</h4>
-              <div className="pfs-input-form-group mb-3">
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="confirmed_warranty"
-                    name="confirmed_warranty"
-                    checked={
-                      formData?.confirmed_warranty === "1" ||
-                      formData?.confirmed_warranty === 1 ||
-                      formData?.confirmed_warranty === "true" ||
-                      formData?.confirmed_warranty === true
-                    }
-                    onChange={handleChange}
-                    className="mt-1 mr-2"
-                  />
-                  <label htmlFor="confirmed_warranty" className="cursor-pointer">
-                    <span>
-                      YES - I have read, understood & agree to the{" "}
-                      <button
-                        type="button"
-                        className="text-blue-600 hover:underline p-0 bg-transparent border-0"
-                        onClick={() => {
-                          fetchWarrantyText();
-                          setShowWarrantyModal(true);
-                        }}
-                      >
-                        LoadLink Transit Warranty conditions
-                      </button>{" "}
-                      *
-                    </span>
-                  </label>
-                </div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-br from-gray-500 to-gray-600">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 className="text-lg font-semibold text-gray-800">Confirmation & Agreement</h4>
+          </div>
+          
+          <div className="space-y-4">
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="confirmed_warranty"
+                  name="confirmed_warranty"
+                  checked={
+                    formData?.confirmed_warranty === "1" ||
+                    formData?.confirmed_warranty === 1 ||
+                    formData?.confirmed_warranty === "true" ||
+                    formData?.confirmed_warranty === true
+                  }
+                  onChange={handleChange}
+                  className="mt-1 w-5 h-5 accent-[#FF7D44] bg-white border-gray-300 rounded focus:ring-[#FF7D44] focus:ring-2 cursor-pointer"
+                />
+                <label htmlFor="confirmed_warranty" className="cursor-pointer text-gray-700 leading-relaxed">
+                  <span>
+                    YES - I have read, understood & agree to the{" "}
+                    <button
+                      type="button"
+                      className="text-[#FF7D44] hover:underline font-medium p-0 bg-transparent border-0 cursor-pointer"
+                      onClick={() => {
+                        fetchWarrantyText();
+                        setShowWarrantyModal(true);
+                      }}
+                    >
+                      LoadLink Transit Warranty conditions
+                    </button>{" "}
+                    <span className="text-red-500">*</span>
+                  </span>
+                </label>
               </div>
+            </div>
 
-              <div className="pfs-input-form-group mb-3">
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="confirmed_terms_conditions"
-                    name="confirmed_terms_conditions"
-                    checked={
-                      formData?.confirmed_terms_conditions === "1" ||
-                      formData?.confirmed_terms_conditions === 1 ||
-                      formData?.confirmed_terms_conditions === "true" ||
-                      formData?.confirmed_terms_conditions === true
-                    }
-                    onChange={handleChange}
-                    className="mt-1 mr-2"
-                  />
-                  <label htmlFor="confirmed_terms_conditions" className="cursor-pointer">
-                    <span>
-                      YES - I have read, understood & agree to the{" "}
-                      <button
-                        type="button"
-                        className="text-blue-600 hover:underline p-0 bg-transparent border-0"
-                        onClick={() => {
-                          fetchTermsText();
-                          setShowTermsModal(true);
-                        }}
-                      >
-                        Terms & Conditions
-                      </button>{" "}
-                      *
-                    </span>
-                  </label>
-                </div>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="confirmed_terms_conditions"
+                  name="confirmed_terms_conditions"
+                  checked={
+                    formData?.confirmed_terms_conditions === "1" ||
+                    formData?.confirmed_terms_conditions === 1 ||
+                    formData?.confirmed_terms_conditions === "true" ||
+                    formData?.confirmed_terms_conditions === true
+                  }
+                  onChange={handleChange}
+                  className="mt-1 w-5 h-5 accent-[#FF7D44] bg-white border-gray-300 rounded focus:ring-[#FF7D44] focus:ring-2 cursor-pointer"
+                />
+                <label htmlFor="confirmed_terms_conditions" className="cursor-pointer text-gray-700 leading-relaxed">
+                  <span>
+                    YES - I have read, understood & agree to the{" "}
+                    <button
+                      type="button"
+                      className="text-[#FF7D44] hover:underline font-medium p-0 bg-transparent border-0 cursor-pointer"
+                      onClick={() => {
+                        fetchTermsText();
+                        setShowTermsModal(true);
+                      }}
+                    >
+                      Terms & Conditions
+                    </button>{" "}
+                    <span className="text-red-500">*</span>
+                  </span>
+                </label>
               </div>
+            </div>
 
-              <div className="pfs-input-form-group mb-3">
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="confirmed_understand"
-                    name="confirmed_understand"
-                    checked={
-                      formData?.confirmed_understand === "1" ||
-                      formData?.confirmed_understand === 1 ||
-                      formData?.confirmed_understand === "true" ||
-                      formData?.confirmed_understand === true
-                    }
-                    onChange={handleChange}
-                    className="mt-1 mr-2"
-                  />
-                  <label htmlFor="confirmed_understand" className="cursor-pointer">
-                    <span>
-                      YES - I understand that the{" "}
-                      <button
-                        type="button"
-                        className="text-blue-600 hover:underline p-0 bg-transparent border-0"
-                        onClick={() => {
-                          fetchConsignmentText();
-                          setShowNoteModal(true);
-                        }}
-                      >
-                        Consignment Note
-                      </button>{" "}
-                      supplied via email after booking, must be attached to the
-                      item/s as instructed before pickup *
-                    </span>
-                  </label>
-                </div>
+            <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
+              <div className="flex items-start gap-3">
+                <input
+                  type="checkbox"
+                  id="confirmed_understand"
+                  name="confirmed_understand"
+                  checked={
+                    formData?.confirmed_understand === "1" ||
+                    formData?.confirmed_understand === 1 ||
+                    formData?.confirmed_understand === "true" ||
+                    formData?.confirmed_understand === true
+                  }
+                  onChange={handleChange}
+                  className="mt-1 w-5 h-5 accent-[#FF7D44] bg-white border-gray-300 rounded focus:ring-[#FF7D44] focus:ring-2 cursor-pointer"
+                />
+                <label htmlFor="confirmed_understand" className="cursor-pointer text-gray-700 leading-relaxed">
+                  <span>
+                    YES - I understand that the{" "}
+                    <button
+                      type="button"
+                      className="text-[#FF7D44] hover:underline font-medium p-0 bg-transparent border-0 cursor-pointer"
+                      onClick={() => {
+                        fetchConsignmentText();
+                        setShowNoteModal(true);
+                      }}
+                    >
+                      Consignment Note
+                    </button>{" "}
+                    supplied via email after booking, must be attached to the
+                    item/s as instructed before pickup <span className="text-red-500">*</span>
+                  </span>
+                </label>
               </div>
             </div>
           </div>
           {showError && (
-            <p className="text-red-600 text-center font-light">
-              {errorMessage}
-            </p>
+            <div className="mt-6 bg-red-50 border border-red-200 rounded-lg p-4 flex items-center gap-3">
+              <svg className="w-5 h-5 text-red-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p className="text-red-700 text-sm font-medium">
+                {errorMessage}
+              </p>
+            </div>
           )}
 
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-center gap-4 mt-6">
             <button
               type="button"
-              className="btn btn-primary wgl-button wgl-button-save mt-2 w-1/2 goback-button"
+              className="flex items-center justify-center gap-2 px-8 py-3 bg-white text-gray-700 font-medium rounded-lg border border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 shadow-sm cursor-pointer"
               onClick={handleGoBack}
             >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
               Back
             </button>
 
@@ -352,15 +377,20 @@ function PF_SingleListing_Confirm_Info({
                   ? false
                   : true) || isLoading
               }
-              className="btn btn-primary wgl-button wgl-button-save mt-2 w-1/2 submit-button disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 px-8 py-3 bg-gradient-to-r from-[#FF7D44] to-[#FF6B35] text-white font-medium rounded-lg hover:from-[#FF6B35] hover:to-[#FF5A24] transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:from-[#FF7D44] disabled:hover:to-[#FF6B35] cursor-pointer"
             >
               {isLoading ? (
                 <>
-                  <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mr-2"></div>
+                  <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
                   Processing...
                 </>
               ) : (
-                "Confirm Book"
+                <>
+                  Confirm Booking
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </>
               )}
             </button>
           </div>

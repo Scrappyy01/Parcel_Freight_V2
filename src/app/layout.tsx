@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: 'LoadLink Parcel Freight',
   description: 'Book and manage parcel freight deliveries across Australia',
   keywords: ['parcel freight', 'courier', 'delivery', 'shipping', 'Australia'],
+  icons: {
+    icon: '/images/favicon-loadlink-270x270.png',
+  },
 };
 
 export const viewport: Viewport = {
@@ -24,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" type="image/png" href="/images/favicon-loadlink-270x270.png" />
         <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"

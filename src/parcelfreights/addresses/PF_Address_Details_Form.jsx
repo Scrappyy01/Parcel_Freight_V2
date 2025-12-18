@@ -113,22 +113,32 @@ const PF_Address_Details_Form = ({
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">State *</label>
-              <select
-                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all cursor-pointer ${
-                  hasError && !state ? 'border-red-500' : 'border-gray-200'
-                }`}
-                name={`${deliveryType}_state`}
-                readOnly={deliveryType !== "sender"}
-                onChange={deliveryType === "sender" ? onChange : undefined}
-                value={getFieldValue("state")}
-              >
-                <option value="">Select State</option>
-                {AU_STATE.map((state, index) => (
-                  <option key={index} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
+              {deliveryType !== "sender" ? (
+                <input
+                  className={`w-full px-4 py-3 bg-gray-100 border-2 border-gray-200 rounded-lg text-gray-600 outline-none cursor-not-allowed ${
+                    hasError && !state ? 'border-red-500' : ''
+                  }`}
+                  name={`${deliveryType}_state`}
+                  readOnly
+                  value={getFieldValue("state")}
+                />
+              ) : (
+                <select
+                  className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all cursor-pointer ${
+                    hasError && !state ? 'border-red-500' : 'border-gray-200'
+                  }`}
+                  name={`${deliveryType}_state`}
+                  onChange={onChange}
+                  value={getFieldValue("state")}
+                >
+                  <option value="">Select State</option>
+                  {AU_STATE.map((state, index) => (
+                    <option key={index} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              )}
               {hasError && !state && (
                 <p className="text-xs text-red-600 mt-1.5 flex items-center gap-1">
                   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -142,9 +152,9 @@ const PF_Address_Details_Form = ({
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">City / Suburb *</label>
               <input
-                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                className={`w-full px-4 py-3 border-2 rounded-lg outline-none transition-all ${
                   hasError && !suburb ? 'border-red-500' : 'border-gray-200'
-                } ${deliveryType !== "sender" ? 'bg-gray-50' : ''}`}
+                } ${deliveryType !== "sender" ? 'bg-gray-100 text-gray-600 cursor-not-allowed' : 'bg-white text-gray-900'}`}
                 name={`${deliveryType}_suburb`}
                 readOnly={deliveryType !== "sender"}
                 onChange={deliveryType === "sender" ? onChange : undefined}
@@ -163,9 +173,9 @@ const PF_Address_Details_Form = ({
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">Postcode *</label>
               <input
-                className={`w-full px-4 py-3 bg-white border-2 rounded-lg text-gray-900 outline-none transition-all ${
+                className={`w-full px-4 py-3 border-2 rounded-lg outline-none transition-all ${
                   hasError && !postcode ? 'border-red-500' : 'border-gray-200'
-                } ${deliveryType !== "sender" ? 'bg-gray-50' : ''}`}
+                } ${deliveryType !== "sender" ? 'bg-gray-100 text-gray-600 cursor-not-allowed' : 'bg-white text-gray-900'}`}
                 name={`${deliveryType}_postcode`}
                 readOnly={deliveryType !== "sender"}
                 onChange={deliveryType === "sender" ? onChange : undefined}
