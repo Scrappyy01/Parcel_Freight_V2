@@ -60,8 +60,8 @@ const Modal = ({
 <div className="fixed inset-0 flex min-h-full w-full">
   {/* Lado esquerdo: imagem */}
   <div
-    className="hidden md:block md:w-2/2 bg-cover bg-center"
-    style={{ backgroundImage: "url('/images/loadlink-freight-intelligence.jpg')" }}
+    className="hidden md:block md:w-2/2 bg-cover"
+    style={{ backgroundImage: "url('/images/loadlink-freight-intelligence.jpg')", backgroundPosition: '55% center' }}
   />
 
   {/* Lado direito: modal na parte branca */}

@@ -109,7 +109,7 @@ const PF_Auth_Buttons = ({ show, handleClose, handleData }) => {
                 type="checkbox"
                 checked={agreed}
                 onChange={handleCheckbox}
-                className="mt-1 w-4 h-4 text-blue-600 border-gray-300 rounded cursor-pointer"
+                className="mt-1 w-4 h-4 text-[#FF7D44] border-gray-300 rounded cursor-pointer focus:ring-[#FF7D44] accent-[#FF7D44]"
               />
               <span className="text-xs text-gray-700">
                 I agree to the <a href="/terms" className="text-blue-600 hover:text-blue-700 font-semibold">Terms and Conditions</a>
