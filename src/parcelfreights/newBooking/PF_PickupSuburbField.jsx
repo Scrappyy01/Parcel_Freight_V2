@@ -103,9 +103,11 @@ const PickupSuburbField = ({ setPickupSuburb, pickupSuburb, errors }) => {
 
   // Custom container for suggestions dropdown
   const renderSuggestionsContainer = ({ containerProps, children }) => {
+    const { key, ...restProps } = containerProps;
     return (
       <div 
-        {...containerProps} 
+        key={key}
+        {...restProps} 
         className="absolute z-50 w-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden"
       >
         <div className="max-h-[400px] overflow-y-auto">

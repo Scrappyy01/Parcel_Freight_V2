@@ -2,20 +2,16 @@ import { Fragment, useEffect, useState, useContext, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { UserContext } from "../contexts/UserContext";
 import { fetchCollection } from "../redux/services/collectionSlice";
-import { resetParcelFreightStatus } from "../redux/services/parcelFreightSlice";
-import { resetCollectionStatus } from "../redux/services/collectionSlice";
 import { resetAddressStatus } from "../redux/services/addressSlice";
 import { resetConfirmationStatus } from "../redux/services/confirmationSlice";
 import { resetPaymentStatus } from "../redux/services/paymentSlice";
 import { resetTrackingStatus } from "../redux/services/trackingSlice";
 
 import { useRouter, useParams } from "next/navigation";
-import { isEmpty, isNumber } from "lodash";
+import { isEmpty } from "lodash";
 
 import ParcelFreightAddress from "./addresses/PF_Address_Details";
-import ParcelFreightDetail from "./details/Parcel_Freight_detail.jsx";
 
-import loadlink from "@/assets/ll-logo.svg";
 import loadlinkLogo from "@/assets/Loadlink-Logo.svg";
 import PFSingleListingConfirmInfo from "./confirmInfo/PF_SingleListing_Confirm_Info.jsx";
 import Payment from "./payments/Payment.jsx";
@@ -24,18 +20,16 @@ import PFTracking from "./tracks/PF_Tracking";
 import { isTrade, isEcommerce } from "@/utils/helpers";
 
 const PF_SingleListing_Collection_Data = () => {
-  const [activeKey, setActiveKey] = useState("job-data");
-  const [disableJob, setDisableJob] = useState(false);
-  const [disableAddress, setDisableAddress] = useState(true);
+  const [activeKey, setActiveKey] = useState("collection");
+  const [disableAddress, setDisableAddress] = useState(false);
   const [disableConfirmation, setDisableConfirmation] = useState(true);
   const [disablePayment, setDisablePayment] = useState(true);
   const [disableSummary, setDisableSummary] = useState(true);
   const [disableTracking, setDisableTracking] = useState(true);
-  const [flashRed, setFlashRed] = useState(false);
   const dispatch = useDispatch();
   const { data, status, error } = useSelector((state) => state.collection);
 
-  const { pf_user, setPF_User } = useContext(UserContext);
+  const { pf_user } = useContext(UserContext);
   const [tradeUser, setTradeUser] = useState(false);
   const [ecommerceUser, setEcommerceUser] = useState(false);
 
@@ -60,9 +54,9 @@ const PF_SingleListing_Collection_Data = () => {
   useEffect(() => {
     if (!isEmpty(data)) {
       if (ignoreAutoProgressRef.current) {
-        setActiveKey("job-data");
+        setActiveKey("collection");
         setDisableJob(false);
-        setDisableAddress(true);
+        setDisableAddress(false);
         setDisableConfirmation(true);
         setDisablePayment(true);
         setDisableSummary(true);
@@ -116,14 +110,7 @@ const PF_SingleListing_Collection_Data = () => {
         }
       }
     }
-  }, [data]);
-
-  const handleParcelFreightDetailSubmit = () => {
-    ignoreAutoProgressRef.current = false;
-    setActiveKey("collection");
-    setDisableAddress(false);
-    dispatch(resetParcelFreightStatus());
-  };
+  }, [data, ecommerceUser, tradeUser]);
 
   const handleParcelFreightAddressSubmit = () => {
     setActiveKey("payment");
@@ -146,11 +133,6 @@ const PF_SingleListing_Collection_Data = () => {
     setDisableSummary(false);
     setDisableTracking(false);
     dispatch(resetConfirmationStatus());
-  };
-
-  const handleSummary = () => {
-    setActiveKey("summary");
-    setDisableSummary(false);
   };
 
   const handleTrackingSubmit = () => {
@@ -221,17 +203,6 @@ const PF_SingleListing_Collection_Data = () => {
               <div className="border-b border-gray-200 mb-3">
                 <nav className="flex -mb-px">
                   <button
-                    onClick={() => !disableJob && setActiveKey("job-data")}
-                    disabled={disableJob}
-                    className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
-                      activeKey === "job-data"
-                        ? "border-b-2 border-blue-600 text-blue-600 font-medium"
-                        : "text-gray-600"
-                    } ${disableJob ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
-                  >
-                    Job Data
-                  </button>
-                  <button
                     onClick={() => !disableAddress && setActiveKey("collection")}
                     disabled={disableAddress}
                     className={`py-4 px-6 block hover:text-blue-600 focus:outline-none ${
@@ -240,7 +211,7 @@ const PF_SingleListing_Collection_Data = () => {
                         : "text-gray-600"
                     } ${disableAddress ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
                   >
-                    Collection
+                    Select Delivery Service
                   </button>
                   {!(tradeUser || ecommerceUser) && (
                     <button
@@ -293,22 +264,13 @@ const PF_SingleListing_Collection_Data = () => {
 
               {/* Tab Content */}
               <div className="tab-content">
-                {activeKey === "job-data" && (
-                  <ParcelFreightDetail
-                    onSubmitParcelFreightDetail={
-                      handleParcelFreightDetailSubmit
-                    }
-                  />
-                )}
-                
                 {activeKey === "collection" && (
                   <ParcelFreightAddress
                     onSubmitParcelFreightAddress={
                       handleParcelFreightAddressSubmit
                     }
                     onBack={() => {
-                      setFlashRed(false);
-                      setActiveKey("job-data");
+                      router.push("/parcel-freight");
                     }}
                   />
                 )}
@@ -317,11 +279,9 @@ const PF_SingleListing_Collection_Data = () => {
                   <Payment
                     onSubmitPayment={handlePaymentSubmit}
                     onBack={() => {
-                      setFlashRed(false);
                       setActiveKey("collection");
                     }}
                     onNext={() => {
-                      setFlashRed(false);
                       setActiveKey("confirmation");
                     }}
                   />
@@ -333,10 +293,11 @@ const PF_SingleListing_Collection_Data = () => {
                       handleParcelFreightConfirmationSubmit
                     }
                     onBack={() => {
-                      setFlashRed(false);
-                      isTrade(pf_user) || isEcommerce(pf_user)
-                        ? setActiveKey("collection")
-                        : setActiveKey("payment");
+                      if (isTrade(pf_user) || isEcommerce(pf_user)) {
+                        setActiveKey("collection");
+                      } else {
+                        setActiveKey("payment");
+                      }
                     }}
                   />
                 )}
@@ -344,11 +305,9 @@ const PF_SingleListing_Collection_Data = () => {
                 {activeKey === "summary" && (
                   <PFSummary
                     onBack={() => {
-                      setFlashRed(false);
                       setActiveKey("confirmation");
                     }}
                     onStatus={() => {
-                      setFlashRed(false);
                       setActiveKey("tracking");
                     }}
                   />
@@ -358,7 +317,6 @@ const PF_SingleListing_Collection_Data = () => {
                   <PFTracking
                     onSubmitParcelFreightTracking={handleTrackingSubmit}
                     onBack={() => {
-                      setFlashRed(false);
                       setActiveKey("summary");
                     }}
                   />

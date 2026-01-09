@@ -311,7 +311,7 @@ function PF_Address_Details({ onSubmitParcelFreightAddress, onBack }) {
 
   useEffect(() => {
     setIsFedex(
-      collection.service_name.toLowerCase().replace(/\s+/g, "") === "fedex"
+      collection?.service_name?.toLowerCase().replace(/\s+/g, "") === "fedex"
     );
   }, [collection]);
 
